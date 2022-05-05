@@ -28,12 +28,13 @@ const renderItem = ({item}) => {
     }
 
     return(
-
+<>
+    <
         <FlatList
             data={allSales}
             keyExtractor={(item,index) => index.toString()}
             renderItem={renderItem}
         />
-
+</>
     )
 }
