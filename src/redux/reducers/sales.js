@@ -1,4 +1,4 @@
-import {ADD_SALES,SELECTED_SALE} from "../actions/actionsTypes";
+import {GET_SALES,SELECTED_SALE} from "../actions/actionsTypes";
 const initialState = {
     list: [],
     selectedSale: {}
@@ -6,10 +6,9 @@ const initialState = {
 
 export const sales = (state = initialState, action) => {
     switch (action.type){
-        case ADD_SALES:
+        case GET_SALES:
             return {
-
-                list: [...state.list, ...action.payload.data],
+                list:[...state.list, ...action.payload.data],
                 selectedSale: state.selectedSale
             }
         case SELECTED_SALE:

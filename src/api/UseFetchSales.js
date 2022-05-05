@@ -15,7 +15,7 @@ export const useFetchSales = () => {
         }
 
     }
-    const getSelectedSaleById = async (id) => {
+    const getSaleById = async (id) => {
         try {
             const response = await axios.get(URL + "/api/products/" + id)
             dispatch((selectedSale(response.data)))
@@ -26,6 +26,6 @@ export const useFetchSales = () => {
 
     return {
         getAllSales,
-        getSelectedSaleById
+        getSaleById
     }
 }

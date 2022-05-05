@@ -10,11 +10,13 @@ export default function DetailsScreen({navigation,route}){
 
     const [ quantity, setQuantity ] = useState(route.params.quantity);
     const {id} = route.params
-    const {getSelectedSaleById} = useFetchSales()
+    const {getSaleById} = useFetchSales()
     const sale = useSelector(getSelectedSale)
 
-  //  useEffect(() => { })
-        getSelectedSaleById(id)
+    useEffect(() => {
+        getSaleById(id)
+    },[])
+
 
 
 
