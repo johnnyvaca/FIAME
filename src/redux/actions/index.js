@@ -1,15 +1,22 @@
-import {GET_SALES, SELECTED_SALE} from "./actionsTypes";
+import {GET_SALES, GET_SALE_ID} from './actionsTypes';
 
-export const addSales = (data) => ({
+export const addSales = data => ({
     type: GET_SALES,
     payload: {
-        data
-    }
-})
+        data,
+    },
+});
 
-export const selectedSale = (data) => ({
-    type: SELECTED_SALE,
+export const selectedSale = data => ({
+    type: GET_SALE_ID,
     payload: {
-        data
-    }
-})
+        data,
+    },
+});
+
+export const postSale = data => ({
+    type: POST_SALE,
+    payload: {
+        data,
+    },
+});

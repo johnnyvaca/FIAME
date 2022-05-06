@@ -15,6 +15,7 @@ import {NavigationContainer, useRoute} from "@react-navigation/native";
 import TopTabs from "./src/navigation/TopTabs";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import DetailsScreen from "./src/screens/Details";
+import AddProductScreen from "./src/screens/AddProduct";
 import {Provider} from "react-redux";
 import {store} from "./src/redux/store";
 
@@ -53,10 +54,16 @@ const App = () => {
     return (<Provider store={store}>
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen name="Home" component={TopTabs} options={{headerTitle: () => {Head}}}/>
+                    <Stack.Screen name="Home" component={TopTabs} options={{
+                        headerTitle: () => {
+                            Head
+                        }
+                    }}/>
                     <Stack.Screen name="Details" component={DetailsScreen} options={({route}) => ({
                         title: route.params.name
                     })}/>
+                    <Stack.Screen name="AddProduct" component={AddProductScreen}
+                                  options={{title: "Ajouter un produit"}}/>
 
                 </Stack.Navigator>
             </NavigationContainer>
