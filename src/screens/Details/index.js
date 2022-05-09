@@ -12,28 +12,59 @@ import {URL} from '../../../env';
 import {useSelector} from 'react-redux';
 import {getSelectedSale} from '../../redux/selectors';
 import {useFetchSales} from '../../api/UseFetchSales';
+import axios from 'axios';
+import {selectedSale} from '../../redux/actions';
+
+export const DropButton = () => {
+  <Button title="hello" />;
+};
 
 export default function DetailsScreen({navigation, route}) {
   const [quantity, setQuantity] = useState(route.params.quantity);
   const {id} = route.params;
+
+  const deleteSale = async id2 => {
+    try {
+      const response = await axios.delete(URL + '/api/products/' + id2);
+    } catch (e) {
+      console.error('Error', e);
+    }
+  };
+  const putSale = async id => {
+    try {
+      const response = await axios.post(URL + '/api/products/' + id, {
+        name: name,
+        //      description: description,
+        img: image,
+        //quantity: quantity,
+        selling_date: year + '-' + month + '-' + day,
+        price: price,
+        user_id: 1,
+      });
+    } catch (e) {
+      console.error('Error', e);
+    }
+  };
+
+  function test() {
+    deleteSale(id);
+    navigation.navigate('Home');
+  }
+
   const {getSaleById} = useFetchSales();
   const sale = useSelector(getSelectedSale);
 
   useEffect(() => {
     getSaleById(id);
   }, []);
-
+  console.log('URL: ', URL + '/img/' + sale.img);
   console.log('sale: ', sale);
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.goBack();
-        }}>
-        <Text>revenir</Text>
-        <Text>{id}</Text>
-      </TouchableOpacity>
+      <Text>{id}</Text>
+
+      {/* eslint-disable-next-line react-native/no-inline-styles */}
       <View style={{flex: 6}}>
         <Image source={{uri: URL + '/img/' + sale.img}} style={styles.coucou} />
       </View>
@@ -126,6 +157,12 @@ export default function DetailsScreen({navigation, route}) {
           justifyContent: 'space-around',
           paddingHorizontal: 70,
         }}>
+        <TouchableOpacity
+          onPress={() => {
+            test();
+          }}>
+          <Image source={require('../../../assets/icons/icon_bin.png')} />
+        </TouchableOpacity>
         <Button title="Annuler" color="red" />
         <Button title="Confirmer" />
       </View>

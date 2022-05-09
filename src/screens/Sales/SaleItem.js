@@ -2,10 +2,10 @@ import React, {Fragment, useLayoutEffect} from 'react';
 import {Text, Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {URL} from '../../../env';
-import {newProduct} from '../AddProduct/index';
 
 export default function SaleItem({sale, navigation}) {
   function test() {
+    console.log('id: ', sale.id);
     navigation.navigate('Details', {id: sale.id});
   }
 

@@ -28,34 +28,18 @@ export default function AddProductScreen({navigation}) {
   const [year, setYear] = useState();
   const [price, setPrice] = useState();
 
-  const newProduct = [
-    {
-      name: name,
-      description: description,
-      image: image,
-      quantity: quantity,
-      day: day,
-      month: month,
-      year: year,
-      date: year + '-' + month + '-' + day,
-      price: price,
-    },
-  ];
-
   const postSale2 = async () => {
     try {
       console.log('name: ', name);
-      const response = await axios.post(
-        URL +
-          '/api/products/?name=' +
-          'pizza3' +
-          '&selling_date=' +
-          '2022-03-03' +
-          '&price=' +
-          10 +
-          '&user_id=' +
-          1,
-      );
+      const response = await axios.post(URL + '/api/products/', {
+        name: name,
+        //      description: description,
+        img: image,
+        //quantity: quantity,
+        selling_date: year + '-' + month + '-' + day,
+        price: price,
+        user_id: 1,
+      });
     } catch (e) {
       console.error('Error', e);
     }
@@ -63,7 +47,7 @@ export default function AddProductScreen({navigation}) {
 
   function test() {
     postSale2();
-    //   navigation.navigate('Home', newProduct);
+    navigation.navigate('Home');
   }
 
   return (
@@ -88,11 +72,6 @@ export default function AddProductScreen({navigation}) {
         onChangeText={quantity => setQuantity(quantity)}
         style={styles.inputText}
         placeholder="Choisir la quantité disponible"
-      />
-      <TextInput
-        onChangeText={day => setDay(day)}
-        style={styles.inputText}
-        placeholder="Choisir une date"
       />
       <TextInput
         onChangeText={price => setPrice(price)}
@@ -134,7 +113,7 @@ export default function AddProductScreen({navigation}) {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            postSale2();
+            test();
           }}
           style={[
             styles.inputText,
