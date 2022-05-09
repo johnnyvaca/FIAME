@@ -1,8 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useDispatch} from 'react-redux';
-import {addSales, selectedSale} from '../redux/actions';
+import {addSales, selectedSale, postSale} from '../redux/actions';
 import {URL} from '../../env';
+
+export const postSale2 = async (name, date, price, user_id) => {
+  try {
+    const response = await axios.get(
+      URL +
+        '/api/products/?name=' +
+        name +
+        '&selling_date=' +
+        date +
+        '&price=' +
+        price +
+        '&user_id=' +
+        user_id,
+    );
+  } catch (e) {
+    console.error('Error', e);
+  }
+};
 
 export const useFetchSales = () => {
   const dispatch = useDispatch();
@@ -16,7 +34,7 @@ export const useFetchSales = () => {
   };
   const getSaleById = async id => {
     try {
-      const response = await axios.get(URL + '/api/products/' + id);
+      const response = await axios.post(URL + '/api/products/' + id);
       dispatch(selectedSale(response.data));
     } catch (e) {
       console.error('Error', e);

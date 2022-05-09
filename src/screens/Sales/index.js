@@ -6,10 +6,9 @@ import {useFetchSales} from '../../api/UseFetchSales';
 import {useSelector} from 'react-redux';
 import {getSalesList} from '../../redux/selectors';
 
-export default function SalesScreen({navigation}) {
+export default function SalesScreen({navigation, route}) {
   const allSales = useSelector(getSalesList);
   const {getAllSales} = useFetchSales();
-  //  console.log("ALL Sales: ",allSales)
 
   useEffect(() => {
     getAllSales();

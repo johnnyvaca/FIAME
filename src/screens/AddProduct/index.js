@@ -15,9 +15,9 @@ import {useSelector} from 'react-redux';
 import {postSale} from '../../redux/selectors';
 import {useFetchSales} from '../../api/UseFetchSales';
 import DateField from 'react-native-datefield';
+import axios from 'axios';
 
-export default function AddProductScreen({navigation, route}) {
-  //  const name = "";
+export default function AddProductScreen({navigation}) {
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
@@ -28,10 +28,8 @@ export default function AddProductScreen({navigation, route}) {
   const [year, setYear] = useState();
   const [price, setPrice] = useState();
 
-  const {postSale} = useFetchSales();
-
-  function test() {
-    navigation.navigate('Home', {
+  const newProduct = [
+    {
       name: name,
       description: description,
       image: image,
@@ -39,8 +37,33 @@ export default function AddProductScreen({navigation, route}) {
       day: day,
       month: month,
       year: year,
+      date: year + '-' + month + '-' + day,
       price: price,
-    });
+    },
+  ];
+
+  const postSale2 = async () => {
+    try {
+      console.log('name: ', name);
+      const response = await axios.post(
+        URL +
+          '/api/products/?name=' +
+          'pizza3' +
+          '&selling_date=' +
+          '2022-03-03' +
+          '&price=' +
+          10 +
+          '&user_id=' +
+          1,
+      );
+    } catch (e) {
+      console.error('Error', e);
+    }
+  };
+
+  function test() {
+    postSale2();
+    //   navigation.navigate('Home', newProduct);
   }
 
   return (
@@ -111,7 +134,7 @@ export default function AddProductScreen({navigation, route}) {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            test();
+            postSale2();
           }}
           style={[
             styles.inputText,
