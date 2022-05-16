@@ -40,16 +40,14 @@ export default function AddProductScreen({navigation}) {
       setCondition(true);
       console.log('condition désactivée', condition);
       console.log('name', name);
-      console.log('image', image);
       console.log('price', price);
     } else {
       setCondition(false);
       console.log('condition', condition);
       console.log('name', name);
-      console.log('img', image);
       console.log('price', price);
     }
-  }, [name, price, image]);
+  }, [name, price, image, condition]);
   const postSale2 = async () => {
     try {
       const response = await axios.post(URL + '/api/products/', {
@@ -74,6 +72,7 @@ export default function AddProductScreen({navigation}) {
   function test2() {
     navigation.navigate('Home');
   }
+
   const openCamera = () => {
     let options = {
       path: 'images',
@@ -81,7 +80,8 @@ export default function AddProductScreen({navigation}) {
       quality: 1,
       includeBase64: true,
     };
-    launchImageLibrary(options, response => {
+
+    launchCamera(options, response => {
       if (response.didCancel) {
         console.log('Cancel upload image');
       } else if (response.errorCode === 'permission') {
@@ -99,7 +99,16 @@ export default function AddProductScreen({navigation}) {
         );
       }
     });
-    launchCamera(options, response => {
+  };
+
+  const chooseImage = () => {
+    let options = {
+      path: 'images',
+      mediaType: 'photo',
+      quality: 1,
+      includeBase64: true,
+    };
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('Cancel upload image');
       } else if (response.errorCode === 'permission') {
@@ -132,6 +141,7 @@ export default function AddProductScreen({navigation}) {
         style={styles.inputText}
         placeholder="Choisir un prix"
       />
+
       <Button
         title="Open camera"
         onPress={() => {
@@ -141,12 +151,12 @@ export default function AddProductScreen({navigation}) {
         style={styles.inputText}
       />
       <Button
-          title="choisir un fichier"
-          onPress={() => {
-            openCamera();
-            //    alert('presed');
-          }}
-          style={styles.inputText}
+        title="choisir un fichier"
+        onPress={() => {
+          chooseImage();
+          //    alert('presed');
+        }}
+        style={styles.inputText}
       />
 
       <View
@@ -199,5 +209,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     marginTop: 10,
+  },
+  coucou: {
+    flex: 1,
+    width: '100%',
+    resizeMode: 'contain',
   },
 });
