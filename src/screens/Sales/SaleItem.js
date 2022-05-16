@@ -5,7 +5,6 @@ import {URL} from '../../../env';
 
 export default function SaleItem({sale, navigation}) {
   function test() {
-    console.log('id: ', sale.id);
     navigation.navigate('Details', {id: sale.id});
   }
   return (
