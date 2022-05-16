@@ -31,18 +31,6 @@ export default function SalesScreen({navigation}) {
       });
     //   return axios.get(URL + '/api/products').then(reponse => reponse.data);
   }
-  /*
-  async function chose() {
-    navigation.addListener('focus', async () => {
-      await axios
-        .get(URL + '/api/products')
-        .then(response => {
-          console.log('responseTOTALES: ', response.data);
-        })
-        .catch(e => alert(e.message));
-    });
-  }console.log('chose', chose);
-  */
   useEffect(() => {
     fetchData();
   }, []);
