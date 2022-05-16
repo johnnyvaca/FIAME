@@ -25,6 +25,7 @@ import DetailsScreen from './src/screens/Details';
 import AddProductScreen from './src/screens/AddProduct';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
+import UpdateProductScreen from "./src/screens/UpdateProduct";
 
 const Stack = createNativeStackNavigator();
 
@@ -78,6 +79,11 @@ const App = () => {
             name="AddProduct"
             component={AddProductScreen}
             options={{title: 'Ajouter un produit'}}
+          />
+          <Stack.Screen
+            name="UpdateProduct"
+            component={UpdateProductScreen}
+            options={{title: 'Mettre à jour un produit'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

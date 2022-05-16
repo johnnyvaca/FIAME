@@ -24,7 +24,9 @@ export default function DetailsScreen({navigation, route}) {
   const [quantity, setQuantity] = useState(route.params.quantity);
   const [order, setOrder] = useState();
   const {id} = route.params;
-
+    function test3() {
+        navigation.navigate('UpdateProduct',{id:id});
+    }
   const deleteSale = async id2 => {
     try {
       const response = await axios.delete(URL + '/api/products/' + id2);
@@ -52,19 +54,20 @@ export default function DetailsScreen({navigation, route}) {
 
   const {getSaleById} = useFetchSales();
   const sale = useSelector(getSelectedSale);
-  const [ord, setOrd] = useState(sale.orders);
 
+  var array = [];
+
+  for (let prop in sale.orders) {
+    array.push(sale.orders[prop]);
+  }
+  console.log(array.length);
+  // var myObject = sale.orders[0];
+  //  var count = Object.keys(myObject).length;
+  const [ord, setOrd] = useState(sale.orders);
+  const [taille, setTaille] = useState(0);
   useEffect(() => {
     getSaleById(id);
-
-    if (ord.length === 0) {
-      setOrder(false);
-      console.log('ord', ord);
-    } else {
-      setOrder(true);
-      console.log('ord', ord);
-    }
-  }, [ord, order]);
+  }, []);
   // console.log('sale: ', sale.orders);
 
   return (
@@ -169,13 +172,15 @@ export default function DetailsScreen({navigation, route}) {
             test();
           }}>
           <Image
-            style={
-              sale.orders.length === 0
-                ? {}
-                : {width: '0%', height: '0%'}
-            }
-            source={require('../../../assets/icons/icon_bin.png')}
+            style={array.length === 0 ? {} : {width: '0%', height: '0%'}}
+            source={require('../../../assets/icons/icons8-poubelle-32.png')}
           />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            test3();
+          }}>
+          <Image source={require('../../../assets/icons/icons8-edit-32.png')} />
         </TouchableOpacity>
         <Button title="Annuler" color="red" />
         <Button title="Confirmer" />
