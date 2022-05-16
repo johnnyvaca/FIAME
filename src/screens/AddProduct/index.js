@@ -36,7 +36,7 @@ export default function AddProductScreen({navigation}) {
         //      description: description,
         img: image,
         //quantity: quantity,
-        selling_date: year + '-' + month + '-' + day,
+        //    selling_date: year + '-' + month + '-' + day,
         price: price,
         user_id: 1,
       });

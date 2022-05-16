@@ -1,5 +1,12 @@
 import React, {useEffect} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useState} from 'react';
 import SaleItem from './SaleItem';
 import {useFetchSales} from '../../api/UseFetchSales';
@@ -8,24 +15,24 @@ import {getSalesList} from '../../redux/selectors';
 import axios from 'axios';
 import {URL} from '../../../env';
 
-const getAllSales2 = async () => {
-  try {
-    const response = await axios.get(URL + '/api/products');
-    return response.data;
-  } catch (e) {
-    console.error('Error in getAllSales', e);
-  }
-};
-console.log('liste complete: ', getAllSales2);
 
 export default function SalesScreen({navigation}) {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(true);
   const allSales = useSelector(getSalesList);
   const {getAllSales} = useFetchSales();
 
-  function getDonnees() {
-    return axios.get(URL + '/api/products').then(reponse => reponse.data);
+  function fetchData() {
+    fetch('http://192.168.43.114:8000/api/products')
+      .then(res => res.json())
+      .then(results => {
+        console.log(results);
+        setData(results);
+        setLoading(false);
+      });
+    //   return axios.get(URL + '/api/products').then(reponse => reponse.data);
   }
-
+  /*
   async function chose() {
     navigation.addListener('focus', async () => {
       await axios
@@ -35,14 +42,11 @@ export default function SalesScreen({navigation}) {
         })
         .catch(e => alert(e.message));
     });
-  }
-
-  console.log('chose', chose);
+  }console.log('chose', chose);
+  */
   useEffect(() => {
-    getAllSales();
+    fetchData();
   }, []);
-
-  console.log('getDONNES', getDonnees());
   const renderItem = ({item}) => {
     return <SaleItem sale={item} navigation={navigation} />;
   };
@@ -59,9 +63,11 @@ export default function SalesScreen({navigation}) {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={allSales}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
+        onRefresh={() => fetchData()}
+        refreshing={loading}
       />
     </>
   );
