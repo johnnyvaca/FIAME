@@ -52,19 +52,14 @@ export default function DetailsScreen({navigation, route}) {
 
   const {getSaleById} = useFetchSales();
   const sale = useSelector(getSelectedSale);
+  var myObject = sale.orders;
+  var count = Object.keys(myObject).length;
+  console.log('orders', count);
   const [ord, setOrd] = useState(sale.orders);
-
+  const [taille, setTaille] = useState(0);
   useEffect(() => {
     getSaleById(id);
-
-    if (ord.length === 0) {
-      setOrder(false);
-      console.log('ord', ord);
-    } else {
-      setOrder(true);
-      console.log('ord', ord);
-    }
-  }, [ord, order]);
+  }, []);
   // console.log('sale: ', sale.orders);
 
   return (
@@ -170,7 +165,7 @@ export default function DetailsScreen({navigation, route}) {
           }}>
           <Image
             style={
-              sale.orders.length === 0
+              count === 0
                 ? {}
                 : {width: '0%', height: '0%'}
             }
