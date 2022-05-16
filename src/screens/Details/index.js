@@ -14,6 +14,7 @@ import {getSelectedSale} from '../../redux/selectors';
 import {useFetchSales} from '../../api/UseFetchSales';
 import axios from 'axios';
 import {selectedSale} from '../../redux/actions';
+import {shouldFallbackToLegacyNativeModule} from '@react-native-async-storage/async-storage/lib/typescript/shouldFallbackToLegacyNativeModule';
 
 export const DropButton = () => {
   <Button title="hello" />;
@@ -21,6 +22,7 @@ export const DropButton = () => {
 
 export default function DetailsScreen({navigation, route}) {
   const [quantity, setQuantity] = useState(route.params.quantity);
+  const [order, setOrder] = useState();
   const {id} = route.params;
 
   const deleteSale = async id2 => {
@@ -34,10 +36,7 @@ export default function DetailsScreen({navigation, route}) {
     try {
       const response = await axios.post(URL + '/api/products/' + id, {
         name: name,
-        //      description: description,
         img: image,
-        //quantity: quantity,
-        selling_date: year + '-' + month + '-' + day,
         price: price,
         user_id: 1,
       });
@@ -53,12 +52,20 @@ export default function DetailsScreen({navigation, route}) {
 
   const {getSaleById} = useFetchSales();
   const sale = useSelector(getSelectedSale);
+  const [ord, setOrd] = useState(sale.orders);
 
   useEffect(() => {
     getSaleById(id);
-  }, []);
-  console.log('URL: ', URL + '/img/' + sale.img);
-  console.log('sale: ', sale);
+
+    if (ord.length === 0) {
+      setOrder(false);
+      console.log('ord', ord);
+    } else {
+      setOrder(true);
+      console.log('ord', ord);
+    }
+  }, [ord, order]);
+  // console.log('sale: ', sale.orders);
 
   return (
     <View style={styles.container}>
@@ -161,7 +168,14 @@ export default function DetailsScreen({navigation, route}) {
           onPress={() => {
             test();
           }}>
-          <Image source={require('../../../assets/icons/icon_bin.png')} />
+          <Image
+            style={
+              sale.orders.length === 0
+                ? {}
+                : {width: '0%', height: '0%'}
+            }
+            source={require('../../../assets/icons/icon_bin.png')}
+          />
         </TouchableOpacity>
         <Button title="Annuler" color="red" />
         <Button title="Confirmer" />
