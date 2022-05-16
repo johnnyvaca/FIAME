@@ -33,21 +33,23 @@ export default function AddProductScreen({navigation}) {
       name === undefined ||
       name === '' ||
       price === undefined ||
-      price === ''
+      price === '' ||
+      image === undefined ||
+      image === ''
     ) {
       setCondition(true);
       console.log('condition désactivée', condition);
       console.log('name', name);
-      console.log('name', image);
-      console.log('name', price);
+      console.log('image', image);
+      console.log('price', price);
     } else {
       setCondition(false);
       console.log('condition', condition);
       console.log('name', name);
-      console.log('name', image);
-      console.log('name', price);
+      console.log('img', image);
+      console.log('price', price);
     }
-  }, [name, price]);
+  }, [name, price, image]);
   const postSale2 = async () => {
     try {
       const response = await axios.post(URL + '/api/products/', {
@@ -72,31 +74,50 @@ export default function AddProductScreen({navigation}) {
   function test2() {
     navigation.navigate('Home');
   }
-
-  const [options, setOptions] = useState();
-  const openCamara = () => {
-    const options2 = {
-      storageOptions: {
-        path: 'images',
-        mediaType: 'photo',
-      },
+  const openCamera = () => {
+    let options = {
+      path: 'images',
+      mediaType: 'photo',
+      quality: 1,
       includeBase64: true,
     };
-    setOptions(options2);
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('Cancel upload image');
+      } else if (response.errorCode === 'permission') {
+        console.log('Not permission');
+      } else if (response.errorCode === 'other') {
+        console.log('other error');
+      } else if (response.assets[0].fileSize > 2097152) {
+        console.log('max 2MB');
+      } else {
+        setImage(
+          'data:' +
+            response.assets[0].type +
+            ';base64,' +
+            response.assets[0].base64,
+        );
+      }
+    });
+    launchCamera(options, response => {
+      if (response.didCancel) {
+        console.log('Cancel upload image');
+      } else if (response.errorCode === 'permission') {
+        console.log('Not permission');
+      } else if (response.errorCode === 'other') {
+        console.log('other error');
+      } else if (response.assets[0].fileSize > 2097152) {
+        console.log('max 2MB');
+      } else {
+        setImage(
+          'data:' +
+            response.assets[0].type +
+            ';base64,' +
+            response.assets[0].base64,
+        );
+      }
+    });
   };
-  launchCamera(options, response => {
-    if (response.didCancel) {
-      console.log('User canceled image picker');
-    } else if (response.error) {
-    } else if (response.customButton) {
-    } else {
-      const source2 = {uri: 'data:image/jpeg;base64,' + response.base64};
-      setSource(source2);
-      setImage(source2);
-      setImageUri(source);
-    }
-  });
-  console.log('image', image);
 
   return (
     <View style={styles.container}>
@@ -114,10 +135,18 @@ export default function AddProductScreen({navigation}) {
       <Button
         title="Open camera"
         onPress={() => {
-          openCamara();
+          openCamera();
           //    alert('presed');
         }}
         style={styles.inputText}
+      />
+      <Button
+          title="choisir un fichier"
+          onPress={() => {
+            openCamera();
+            //    alert('presed');
+          }}
+          style={styles.inputText}
       />
 
       <View

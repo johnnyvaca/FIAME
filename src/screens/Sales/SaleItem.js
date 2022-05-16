@@ -9,7 +9,7 @@ export default function SaleItem({sale, navigation}) {
     navigation.navigate('Details', {id: sale.id});
   }
 
-  console.log(URL + '/img/' + sale.img);
+  console.log('img: ', URL + '/img/' + sale.img);
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -26,7 +26,7 @@ export default function SaleItem({sale, navigation}) {
         }}>
         <View style={styles.pollo2}>
           <Image
-            source={{uri: URL + '/img/' + sale.img}}
+            source={{uri: sale.img}}
             style={styles.pollo}
           />
         </View>

@@ -66,7 +66,7 @@ export default function DetailsScreen({navigation, route}) {
 
       {/* eslint-disable-next-line react-native/no-inline-styles */}
       <View style={{flex: 6}}>
-        <Image source={{uri: URL + '/img/' + sale.img}} style={styles.coucou} />
+        <Image source={{uri: sale.img}} style={styles.coucou} />
       </View>
       <View
         style={{
