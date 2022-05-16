@@ -50,6 +50,10 @@ export default function AddProductScreen({navigation}) {
     navigation.navigate('Home');
   }
 
+  function test2() {
+    navigation.navigate('Home');
+  }
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -58,20 +62,9 @@ export default function AddProductScreen({navigation}) {
         placeholder="Choisir un nom"
       />
       <TextInput
-        onChangeText={description => setDescription(description)}
-        style={styles.inputText}
-        placeholder="Choisir une description"
-      />
-      <TextInput
         onChangeText={image => setImage(image)}
         style={styles.inputText}
         placeholder="Choisir une image"
-      />
-
-      <TextInput
-        onChangeText={quantity => setQuantity(quantity)}
-        style={styles.inputText}
-        placeholder="Choisir la quantité disponible"
       />
       <TextInput
         onChangeText={price => setPrice(price)}
@@ -80,24 +73,6 @@ export default function AddProductScreen({navigation}) {
         placeholder="Choisir un prix"
       />
 
-      <View style={{flexDirection: 'row'}}>
-        <TextInput
-          onChangeText={day => setDay(day)}
-          style={[styles.inputText, {width: '32%'}]}
-          placeholder="Choisir un jour"
-        />
-        <TextInput
-          onChangeText={month => setMonth(month)}
-          style={[styles.inputText, {width: '32%'}]}
-          placeholder="Choisir un mois"
-        />
-        <TextInput
-          onChangeText={year => setYear(year)}
-          keyboardType="numeric"
-          style={[styles.inputText, {width: '32%'}]}
-          placeholder="Choisir une année"
-        />
-      </View>
       <View
         style={{
           flexDirection: 'row',
@@ -105,6 +80,7 @@ export default function AddProductScreen({navigation}) {
           marginLeft: 0,
         }}>
         <TouchableOpacity
+          onPress={() => test2()}
           style={[
             styles.inputText,
             {backgroundColor: '#c40e0e', width: '48%'},

@@ -9,6 +9,7 @@ export default function SaleItem({sale, navigation}) {
     navigation.navigate('Details', {id: sale.id});
   }
 
+  console.log(URL + '/img/' + sale.img);
   return (
     <View style={styles.container}>
       <TouchableOpacity

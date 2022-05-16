@@ -15,7 +15,6 @@ import {getSalesList} from '../../redux/selectors';
 import axios from 'axios';
 import {URL} from '../../../env';
 
-
 export default function SalesScreen({navigation}) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(true);
@@ -23,7 +22,7 @@ export default function SalesScreen({navigation}) {
   const {getAllSales} = useFetchSales();
 
   function fetchData() {
-    fetch('http://192.168.43.114:8000/api/products')
+    fetch(URL + '/api/products')
       .then(res => res.json())
       .then(results => {
         console.log(results);
