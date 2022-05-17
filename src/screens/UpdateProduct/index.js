@@ -21,26 +21,21 @@ import axios from 'axios';
 export default function UpdateProductScreen({navigation, route}) {
   const {getSaleById} = useFetchSales();
   const sale = useSelector(getSelectedSale);
-  const [name, setName] = useState();
+  const [name, setName] = useState(sale.name);
   const [description, setDescription] = useState();
   const [image, setImage] = useState(sale.img);
   const [imageUri, setImageUri] = useState();
   const [source, setSource] = useState();
   console.log('sale', sale.name);
 
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(sale.price);
   const [condition, setCondition] = useState(true);
   const {id} = route.params;
 
   console.log(id);
   useEffect(() => {
     getSaleById(id);
-    if (
-      ((name === undefined || name === '') &&
-        (price === undefined || price === '') &&
-        (image === undefined || image === '')) ||
-      image === sale.img
-    ) {
+    if (image === sale.img && name === sale.name && price === sale.price.toString()) {
       setCondition(true);
       console.log('condition désactivée', condition);
       console.log('name', name);
@@ -134,13 +129,13 @@ export default function UpdateProductScreen({navigation, route}) {
       <TextInput
         onChangeText={name => setName(name)}
         style={styles.inputText}
-        placeholder={sale.name}
+        value={name}
       />
       <TextInput
         onChangeText={price => setPrice(price)}
         keyboardType="numeric"
         style={styles.inputText}
-        placeholder={sale.price.toString()}
+        value={price.toString()}
       />
 
       <Image source={{uri: image}} style={{height: '40%', width: '90%'}} />
