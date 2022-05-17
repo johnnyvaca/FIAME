@@ -88,8 +88,8 @@ export default function AddProductScreen({navigation}) {
         console.log('Not permission');
       } else if (response.errorCode === 'other') {
         console.log('other error');
-      } else if (response.assets[0].fileSize > 2097152) {
-        console.log('max 2MB');
+      } else if (response.assets[0].fileSize > 8000000) {
+        console.log('max 8MB', response.assets[0].fileSize);
       } else {
         setImage(
           'data:' +
@@ -115,8 +115,8 @@ export default function AddProductScreen({navigation}) {
         console.log('Not permission');
       } else if (response.errorCode === 'other') {
         console.log('other error');
-      } else if (response.assets[0].fileSize > 2097152) {
-        console.log('max 2MB');
+      } else if (response.assets[0].fileSize > 8000000) {
+        console.log('max 8MB', response.assets[0].fileSize);
       } else {
         setImage(
           'data:' +
@@ -141,23 +141,50 @@ export default function AddProductScreen({navigation}) {
         style={styles.inputText}
         placeholder="Choisir un prix"
       />
+      <Image
+        source={
+          image === undefined
+            ? require('../../../assets/icons/add_image.jpg')
+            : {uri: image}
+        }
+        style={
+          image === undefined
+              ?{height: '40%', width: '90%'}
+              : {height: '40%', width: '90%'}
+        }
 
-      <Button
-        title="Open camera"
-        onPress={() => {
-          openCamera();
-          //    alert('presed');
-        }}
-        style={styles.inputText}
+
+
       />
-      <Button
-        title="choisir un fichier"
-        onPress={() => {
-          chooseImage();
-          //    alert('presed');
-        }}
-        style={styles.inputText}
-      />
+      <View
+        style={{
+          flexDirection: 'row',
+          width: '100%',
+          marginLeft: 0,
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            openCamera();
+            //    alert('presed');
+          }}
+          style={[
+            styles.inputText,
+            {backgroundColor: '#4d9898', width: '48%'},
+          ]}>
+          <Text>Open camera</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            chooseImage();
+            //    alert('presed');
+          }}
+          style={[
+            styles.inputText,
+            {backgroundColor: '#448888', width: '48%'},
+          ]}>
+          <Text>Choisir une image</Text>
+        </TouchableOpacity>
+      </View>
 
       <View
         style={{

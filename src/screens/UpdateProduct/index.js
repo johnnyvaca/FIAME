@@ -23,7 +23,7 @@ export default function UpdateProductScreen({navigation, route}) {
   const sale = useSelector(getSelectedSale);
   const [name, setName] = useState();
   const [description, setDescription] = useState();
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(sale.img);
   const [imageUri, setImageUri] = useState();
   const [source, setSource] = useState();
   console.log('sale', sale.name);
@@ -88,8 +88,8 @@ export default function UpdateProductScreen({navigation, route}) {
         console.log('Not permission');
       } else if (response.errorCode === 'other') {
         console.log('other error');
-      } else if (response.assets[0].fileSize > 2097152) {
-        console.log('max 2MB');
+      } else if (response.assets[0].fileSize > 8000000) {
+        console.log('max 8MB', response.assets[0].fileSize);
       } else {
         setImage(
           'data:' +
@@ -115,8 +115,8 @@ export default function UpdateProductScreen({navigation, route}) {
         console.log('Not permission');
       } else if (response.errorCode === 'other') {
         console.log('other error');
-      } else if (response.assets[0].fileSize > 2097152) {
-        console.log('max 2MB');
+      } else if (response.assets[0].fileSize > 8000000) {
+        console.log('max 8MB', response.assets[0].fileSize);
       } else {
         setImage(
           'data:' +
@@ -142,7 +142,7 @@ export default function UpdateProductScreen({navigation, route}) {
         placeholder={sale.price.toString()}
       />
 
-      <Image source={{uri: sale.img}} style={{height: '40%', width: '90%'}} />
+      <Image source={{uri: image}} style={{height: '40%', width: '90%'}} />
 
       <View
         style={{
@@ -169,7 +169,7 @@ export default function UpdateProductScreen({navigation, route}) {
             styles.inputText,
             {backgroundColor: '#2bce90', width: '48%'},
           ]}>
-          <Text>chercher dans la galerie</Text>
+          <Text>Rechercher dans la galerie</Text>
         </TouchableOpacity>
       </View>
 
@@ -197,7 +197,7 @@ export default function UpdateProductScreen({navigation, route}) {
               ? [styles.disabled, {backgroundColor: '#848f98', width: '48%'}]
               : [styles.inputText, {backgroundColor: '#084572', width: '48%'}]
           }>
-          <Text style={{color: '#fff', textAlign: 'center'}}>Ajouter</Text>
+          <Text style={{color: '#fff', textAlign: 'center'}}>Modifier</Text>
         </TouchableOpacity>
       </View>
     </View>
