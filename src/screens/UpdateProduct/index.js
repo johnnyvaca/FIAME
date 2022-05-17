@@ -36,9 +36,10 @@ export default function UpdateProductScreen({navigation, route}) {
   useEffect(() => {
     getSaleById(id);
     if (
-      (name === undefined || name === '') &&
-      (price === undefined || price === '') &&
-      (image === undefined || image === '')
+      ((name === undefined || name === '') &&
+        (price === undefined || price === '') &&
+        (image === undefined || image === '')) ||
+      image === sale.img
     ) {
       setCondition(true);
       console.log('condition désactivée', condition);
