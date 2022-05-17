@@ -149,12 +149,9 @@ export default function AddProductScreen({navigation}) {
         }
         style={
           image === undefined
-              ?{height: '40%', width: '90%'}
-              : {height: '40%', width: '90%'}
+            ? {height: '40%', width: '90%'}
+            : {height: '40%', width: '90%'}
         }
-
-
-
       />
       <View
         style={{
