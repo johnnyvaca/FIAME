@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {URL} from '../../../env';
+import {URL} from '../../../environment';
 import {useSelector} from 'react-redux';
 import {postSale} from '../../redux/selectors';
 import {useFetchSales} from '../../api/UseFetchSales';

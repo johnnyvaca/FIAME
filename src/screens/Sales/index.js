@@ -13,7 +13,7 @@ import {useFetchSales} from '../../api/UseFetchSales';
 import {useSelector} from 'react-redux';
 import {getSalesList} from '../../redux/selectors';
 import axios from 'axios';
-import {URL} from '../../../env';
+import {URL} from '../../../environment';
 
 export default function SalesScreen({navigation}) {
   const [loading, setLoading] = useState(true);

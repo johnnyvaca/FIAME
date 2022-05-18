@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useDispatch} from 'react-redux';
 import {addSales, selectedSale} from '../redux/actions';
-import {URL} from '../../env';
+import {URL} from '../../environment';
 
 export const useFetchSales = () => {
   const dispatch = useDispatch();

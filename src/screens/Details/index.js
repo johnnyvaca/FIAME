@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import NumericInput from 'react-native-numeric-input';
-import {URL} from '../../../env';
+import {URL} from '../../../environment';
 import {useSelector} from 'react-redux';
 import {getSelectedSale} from '../../redux/selectors';
 import {useFetchSales} from '../../api/UseFetchSales';
