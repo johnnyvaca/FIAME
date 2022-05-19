@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {
-  Alert,
   FlatList,
   StyleSheet,
   Text,
@@ -28,7 +27,6 @@ export default function SalesScreen({navigation}) {
         setData(results);
         setLoading(false);
       });
-    //   return axios.get(URL + '/api/products').then(reponse => reponse.data);
   }
   useEffect(() => {
     fetchData();

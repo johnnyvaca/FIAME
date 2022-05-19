@@ -212,9 +212,4 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
   },
-  coucou: {
-    flex: 1,
-    width: '100%',
-    resizeMode: 'contain',
-  },
 });

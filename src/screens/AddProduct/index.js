@@ -16,7 +16,7 @@ export default function AddProductScreen({navigation}) {
   const [image, setImage] = useState();
 
   const [price, setPrice] = useState();
-  const [condition, setCondition] = useState(true);
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     if (
@@ -27,18 +27,12 @@ export default function AddProductScreen({navigation}) {
       image === undefined ||
       image === ''
     ) {
-      setCondition(true);
-      console.log('condition désactivée', condition);
-      console.log('name', name);
-      console.log('price', price);
+      setDisabled(true);
     } else {
-      setCondition(false);
-      console.log('condition', condition);
-      console.log('name', name);
-      console.log('price', price);
+      setDisabled(false);
     }
-  }, [name, price, image, condition]);
-  const postSale2 = async () => {
+  }, [name, price, image, disabled]);
+  const postSale = async () => {
     try {
       const response = await axios.post(URL + '/api/products/', {
         name: name,
@@ -46,17 +40,18 @@ export default function AddProductScreen({navigation}) {
         price: price,
         user_id: 1,
       });
+
     } catch (e) {
       console.error('Error', e);
     }
   };
 
-  function test() {
-    postSale2();
+  function PostProduct() {
+    postSale();
     navigation.navigate('Home');
   }
 
-  function test2() {
+  function Cancel() {
     navigation.navigate('Home');
   }
 
@@ -177,7 +172,7 @@ export default function AddProductScreen({navigation}) {
           marginLeft: 0,
         }}>
         <TouchableOpacity
-          onPress={() => test2()}
+          onPress={() => Cancel()}
           style={[
             styles.inputText,
             {backgroundColor: '#c40e0e', width: '48%'},
@@ -185,12 +180,12 @@ export default function AddProductScreen({navigation}) {
           <Text style={{color: '#fff', textAlign: 'center'}}>Annuler</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={condition}
+          disabled={disabled}
           onPress={() => {
-            test();
+            PostProduct();
           }}
           style={
-            condition
+            disabled
               ? [styles.disabled, {backgroundColor: '#848f98', width: '48%'}]
               : [styles.inputText, {backgroundColor: '#084572', width: '48%'}]
           }>
@@ -220,10 +215,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     marginTop: 10,
-  },
-  coucou: {
-    flex: 1,
-    width: '100%',
-    resizeMode: 'contain',
   },
 });

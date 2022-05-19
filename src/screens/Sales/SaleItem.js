@@ -2,14 +2,14 @@ import React from 'react';
 import {Text, Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 
 export default function SaleItem({sale, navigation}) {
-  function test() {
+  function onPress() {
     navigation.navigate('Details', {id: sale.id});
   }
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
-          test();
+          onPress();
         }}
         style={{
           flexDirection: 'row',
@@ -19,8 +19,8 @@ export default function SaleItem({sale, navigation}) {
           borderRadius: 20,
           alignItems: 'center',
         }}>
-        <View style={styles.pollo2}>
-          <Image source={{uri: sale.img}} style={styles.pollo} />
+        <View style={styles.viewImage}>
+          <Image source={{uri: sale.img}} style={styles.image} />
         </View>
         <View>
           <Text style={styles.title}>{sale.name}</Text>
@@ -49,12 +49,12 @@ const styles = StyleSheet.create({
   },
   unchecked: {width: 56, height: 56, left: 1},
   bin: {width: 56, height: 56, left: 30},
-  pollo: {
+  image: {
     flex: 1,
     width: '100%',
     resizeMode: 'contain',
   },
-  pollo2: {
+  viewImage: {
     width: 150,
     height: 100,
     marginRight: 0,

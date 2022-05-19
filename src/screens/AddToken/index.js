@@ -13,30 +13,29 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function AddTokenScreen({navigation}) {
   const {getSaleById} = useFetchSales();
   const sale = useSelector(getSelectedSale);
-  const [name, setName] = useState();
-  const [condition, setCondition] = useState(false);
+  const [key, setKey] = useState();
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     AsyncStorage.getItem('key').then(res => {
-      setName(res);
+      setKey(res);
     });
   }, []);
 
-  function test2() {
-    AsyncStorage.setItem('key', name);
-    AsyncStorage.setItem('condition', 'true');
+  function Save() {
+    AsyncStorage.setItem('key', key);
     navigation.navigate('mes achats');
   }
-  function test() {
-    navigation.dispatch;
+  function Cancel() {
+    navigation.navigate('futur');
   }
 
   return (
     <View style={styles.container}>
       <TextInput
-        onChangeText={name => setName(name)}
+        onChangeText={key => setKey(key)}
         style={styles.inputText}
-        value={name}
+        value={key}
       />
 
       <View
@@ -46,7 +45,7 @@ export default function AddTokenScreen({navigation}) {
           marginLeft: 0,
         }}>
         <TouchableOpacity
-          onPress={() => test()}
+          onPress={() => Cancel()}
           style={[
             styles.inputText,
             {backgroundColor: '#c40e0e', width: '48%'},
@@ -54,12 +53,12 @@ export default function AddTokenScreen({navigation}) {
           <Text style={{color: '#fff', textAlign: 'center'}}>Annuler</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={condition}
+          disabled={disabled}
           onPress={() => {
-            test2();
+            Save();
           }}
           style={
-            condition
+            disabled
               ? [styles.disabled, {backgroundColor: '#848f98', width: '48%'}]
               : [styles.inputText, {backgroundColor: '#084572', width: '48%'}]
           }>
@@ -89,10 +88,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     marginTop: 10,
-  },
-  coucou: {
-    flex: 1,
-    width: '100%',
-    resizeMode: 'contain',
   },
 });
