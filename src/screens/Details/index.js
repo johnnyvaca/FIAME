@@ -24,9 +24,9 @@ export default function DetailsScreen({navigation, route}) {
   const [quantity, setQuantity] = useState(route.params.quantity);
   const [order, setOrder] = useState();
   const {id} = route.params;
-    function test3() {
-        navigation.navigate('UpdateProduct',{id:id});
-    }
+  function test3() {
+    navigation.navigate('UpdateProduct', {id: id});
+  }
   const deleteSale = async id2 => {
     try {
       const response = await axios.delete(URL + '/api/products/' + id2);

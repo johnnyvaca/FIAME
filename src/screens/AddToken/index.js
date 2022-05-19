@@ -13,25 +13,24 @@ import {
 import {useSelector} from 'react-redux';
 import {getSelectedSale} from '../../redux/selectors';
 import {useFetchSales} from '../../api/UseFetchSales';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function AddTokenScreen({navigation}) {
   const {getSaleById} = useFetchSales();
   const sale = useSelector(getSelectedSale);
   const [name, setName] = useState();
 
-
   const [price, setPrice] = useState();
   const [condition, setCondition] = useState(false);
 
   useEffect(() => {
-    AsyncStorage.getItem('key').then((res) => {setName(res)})
+    AsyncStorage.getItem('key').then(res => {
+      setName(res);
+    });
   }, []);
 
-
-
   function test2() {
-    AsyncStorage.setItem('key',name)
-    AsyncStorage.setItem('condition','true')
+    AsyncStorage.setItem('key', name);
+    AsyncStorage.setItem('condition', 'true');
     navigation.navigate('mes achats');
   }
   function test() {

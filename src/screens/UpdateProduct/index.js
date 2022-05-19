@@ -35,7 +35,11 @@ export default function UpdateProductScreen({navigation, route}) {
   console.log(id);
   useEffect(() => {
     getSaleById(id);
-    if (image === sale.img && name === sale.name && price === sale.price.toString()) {
+    if (
+      image === sale.img &&
+      name === sale.name &&
+      price === sale.price.toString()
+    ) {
       setCondition(true);
       console.log('condition désactivée', condition);
       console.log('name', name);

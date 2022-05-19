@@ -22,10 +22,7 @@ export default function SaleItem({sale, navigation}) {
           alignItems: 'center',
         }}>
         <View style={styles.pollo2}>
-          <Image
-            source={{uri: sale.img}}
-            style={styles.pollo}
-          />
+          <Image source={{uri: sale.img}} style={styles.pollo} />
         </View>
         <View>
           <Text style={styles.title}>{sale.name}</Text>

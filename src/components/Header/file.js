@@ -1,9 +1,6 @@
-import React from "react";
-import {Text} from  "react-native"
+import React from 'react';
+import {Text} from 'react-native';
 
-
-
-export default function File(){
-    return(
-    <Text>hello2</Text>)
+export default function File() {
+  return <Text>hello2</Text>;
 }
