@@ -26,9 +26,11 @@ import AddProductScreen from './src/screens/AddProduct';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 import UpdateProductScreen from "./src/screens/UpdateProduct";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AddTokenScreen from "./src/screens/AddToken";
 
 const Stack = createNativeStackNavigator();
-
+AsyncStorage.getItem('key').then((res) => {console.log('res', res)})
 const Header = () => {
   return (
     <View style={{flex: 1, paddingTop: 10}}>
