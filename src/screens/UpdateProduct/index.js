@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   Image,
   StyleSheet,
   Text,
@@ -47,12 +48,11 @@ export default function UpdateProductScreen({navigation, route}) {
     }
   };
 
-  function test() {
+  function save() {
     putSale();
     navigation.navigate('Home');
   }
-
-  function test2() {
+  function cancel() {
     navigation.navigate('Home');
   }
 
@@ -69,10 +69,13 @@ export default function UpdateProductScreen({navigation, route}) {
         console.log('Cancel upload image');
       } else if (response.errorCode === 'permission') {
         console.log('Not permission');
+        Alert.alert('vous n\'avez pas la permission');
       } else if (response.errorCode === 'other') {
         console.log('other error');
+        Alert.alert('erreur inconnue');
       } else if (response.assets[0].fileSize > 8000000) {
         console.log('max 8MB', response.assets[0].fileSize);
+        Alert.alert('l\'image est trop grande. MAX:8MG');
       } else {
         setImage(
           'data:' +
@@ -96,8 +99,10 @@ export default function UpdateProductScreen({navigation, route}) {
         console.log('Cancel upload image');
       } else if (response.errorCode === 'permission') {
         console.log('Not permission');
+        Alert.alert('vous n\'avez pas la permission');
       } else if (response.errorCode === 'other') {
         console.log('other error');
+        Alert.alert('erreur inconnue');
       } else if (response.assets[0].fileSize > 8000000) {
         console.log('max 8MB', response.assets[0].fileSize);
       } else {
@@ -136,7 +141,7 @@ export default function UpdateProductScreen({navigation, route}) {
         <TouchableOpacity
           onPress={() => {
             openCamera();
-            //    alert('presed');
+
           }}
           style={[
             styles.inputText,
@@ -163,7 +168,7 @@ export default function UpdateProductScreen({navigation, route}) {
           marginLeft: 0,
         }}>
         <TouchableOpacity
-          onPress={() => test2()}
+          onPress={() => cancel()}
           style={[
             styles.inputText,
             {backgroundColor: '#c40e0e', width: '48%'},
@@ -173,7 +178,7 @@ export default function UpdateProductScreen({navigation, route}) {
         <TouchableOpacity
           disabled={disabled === 'true'}
           onPress={() => {
-            test();
+            save();
           }}
           style={
             disabled === 'true'
