@@ -19,31 +19,21 @@ export default function UpdateProductScreen({navigation, route}) {
   const sale = useSelector(getSelectedSale);
   const [name, setName] = useState(sale.name);
   const [image, setImage] = useState(sale.img);
-  console.log('sale', sale.name);
-
   const [price, setPrice] = useState(sale.price);
-  const [condition, setCondition] = useState(true);
+  const [disabled, setDisabled] = useState('true');
   const {id} = route.params;
 
   console.log(id);
   useEffect(() => {
     getSaleById(id);
-    if (
-      image === sale.img &&
-      name === sale.name &&
-      price === sale.price.toString()
-    ) {
-      setCondition(true);
-      console.log('condition désactivée', condition);
-      console.log('name', name);
-      console.log('price', price);
+    if (name === sale.name && image === sale.img && price == sale.price) {
+      setDisabled('true');
+      console.log('disabled', disabled);
     } else {
-      setCondition(false);
-      console.log('condition', condition);
-      console.log('name', name);
-      console.log('price', price);
+      setDisabled('false');
+      console.log('disabled', disabled);
     }
-  }, [name, price, image, condition]);
+  }, [name, price, image, disabled]);
   const putSale = async () => {
     try {
       const response = await axios.put(URL + '/api/products/' + id, {
@@ -181,12 +171,12 @@ export default function UpdateProductScreen({navigation, route}) {
           <Text style={{color: '#fff', textAlign: 'center'}}>Annuler</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={condition}
+          disabled={disabled === 'true'}
           onPress={() => {
             test();
           }}
           style={
-            condition
+            disabled === 'true'
               ? [styles.disabled, {backgroundColor: '#848f98', width: '48%'}]
               : [styles.inputText, {backgroundColor: '#084572', width: '48%'}]
           }>

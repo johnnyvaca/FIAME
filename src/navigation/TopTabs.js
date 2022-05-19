@@ -13,7 +13,6 @@ export default function TopTabs() {
   useEffect(() => {
     AsyncStorage.getItem('condition').then(res => {
       setCondition(res);
-      console.log('condition:', condition);
     });
   }, []);
   return (

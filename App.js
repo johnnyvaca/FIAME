@@ -8,13 +8,7 @@
 
 import React from 'react';
 
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-
+import {Image, StyleSheet, Text, View} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import TopTabs from './src/navigation/TopTabs';
@@ -24,36 +18,17 @@ import AddProductScreen from './src/screens/AddProduct';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 import UpdateProductScreen from './src/screens/UpdateProduct';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
-AsyncStorage.getItem('key').then(res => {
-  console.log('res', res);
-});
+
 const Header = () => {
   return (
     <View style={{flex: 1, paddingTop: 10}}>
       <Text style={{fontSize: 30, fontWeight: 'bold'}}>Fiame</Text>
-      <Image source={require('./assets/icons/user.png')} style={styles.a} />
+      <Image source={require('./assets/icons/user.png')} style={styles.icon} />
     </View>
   );
 };
-
-function Head() {
-  <View style={{flex: 1, paddingTop: 10}}>
-    <Text
-      style={{
-        fontSize: 30,
-        fontWeight: 'bold',
-        flexDirection: 'row',
-        width: 100,
-        marginHorizontal: 140,
-      }}>
-      Fiame
-    </Text>
-    <Image source={require('./assets/icons/user.png')} style={styles.a} />
-  </View>;
-}
 
 const App = () => {
   return (
@@ -64,18 +39,10 @@ const App = () => {
             name="Home"
             component={TopTabs}
             options={{
-              headerTitle: () => {
-                Head();
-              },
+              headerTitle: Header,
             }}
           />
-          <Stack.Screen
-            name="Details"
-            component={DetailsScreen}
-            options={({route}) => ({
-              title: route.params.name,
-            })}
-          />
+          <Stack.Screen name="Details" component={DetailsScreen} />
           <Stack.Screen
             name="AddProduct"
             component={AddProductScreen}
@@ -93,7 +60,7 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  a: {
+  icon: {
     width: 45,
     height: 45,
     position: 'absolute',

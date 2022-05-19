@@ -25,7 +25,6 @@ export default function SalesScreen({navigation}) {
     fetch(URL + '/api/products')
       .then(res => res.json())
       .then(results => {
-        console.log(results);
         setData(results);
         setLoading(false);
       });
