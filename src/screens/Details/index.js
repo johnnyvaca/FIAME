@@ -24,30 +24,18 @@ export default function DetailsScreen({navigation, route}) {
   const [quantity, setQuantity] = useState(route.params.quantity);
   const [order, setOrder] = useState();
   const {id} = route.params;
-  function test3() {
+  function updateScreen() {
     navigation.navigate('UpdateProduct', {id: id});
   }
-  const deleteSale = async id2 => {
+  const deleteSale = async idDelete => {
     try {
-      const response = await axios.delete(URL + '/api/products/' + id2);
-    } catch (e) {
-      console.error('Error', e);
-    }
-  };
-  const putSale = async id => {
-    try {
-      const response = await axios.post(URL + '/api/products/' + id, {
-        name: name,
-        img: image,
-        price: price,
-        user_id: 1,
-      });
+      const response = await axios.delete(URL + '/api/products/' + idDelete);
     } catch (e) {
       console.error('Error', e);
     }
   };
 
-  function test() {
+  function deleteProduct() {
     deleteSale(id);
     navigation.navigate('Home');
   }
@@ -61,10 +49,6 @@ export default function DetailsScreen({navigation, route}) {
     array.push(sale.orders[prop]);
   }
   console.log(array.length);
-  // var myObject = sale.orders[0];
-  //  var count = Object.keys(myObject).length;
-  const [ord, setOrd] = useState(sale.orders);
-  const [taille, setTaille] = useState(0);
   useEffect(() => {
     getSaleById(id);
   }, []);
@@ -76,7 +60,7 @@ export default function DetailsScreen({navigation, route}) {
 
       {/* eslint-disable-next-line react-native/no-inline-styles */}
       <View style={{flex: 6}}>
-        <Image source={{uri: sale.img}} style={styles.coucou} />
+        <Image source={{uri: sale.img}} style={styles.image} />
       </View>
       <View
         style={{
@@ -169,7 +153,7 @@ export default function DetailsScreen({navigation, route}) {
         }}>
         <TouchableOpacity
           onPress={() => {
-            test();
+              deleteProduct();
           }}>
           <Image
             style={array.length === 0 ? {} : {width: '0%', height: '0%'}}
@@ -178,7 +162,7 @@ export default function DetailsScreen({navigation, route}) {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            test3();
+            updateScreen();
           }}>
           <Image source={require('../../../assets/icons/icons8-edit-32.png')} />
         </TouchableOpacity>
@@ -194,7 +178,7 @@ const styles = StyleSheet.create({
     flex: 3,
     width: '100%',
   },
-  coucou: {
+  image: {
     flex: 1,
     width: '100%',
     resizeMode: 'contain',
