@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Button,
-  Dimensions,
-  FlatList,
   Image,
   StyleSheet,
   Text,
@@ -15,17 +12,13 @@ import {URL} from '../../../environment';
 import {useSelector} from 'react-redux';
 import {getSelectedSale} from '../../redux/selectors';
 import {useFetchSales} from '../../api/UseFetchSales';
-import DateField from 'react-native-datefield';
 import axios from 'axios';
 
 export default function UpdateProductScreen({navigation, route}) {
   const {getSaleById} = useFetchSales();
   const sale = useSelector(getSelectedSale);
   const [name, setName] = useState(sale.name);
-  const [description, setDescription] = useState();
   const [image, setImage] = useState(sale.img);
-  const [imageUri, setImageUri] = useState();
-  const [source, setSource] = useState();
   console.log('sale', sale.name);
 
   const [price, setPrice] = useState(sale.price);

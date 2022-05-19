@@ -1,7 +1,5 @@
-import React, {Fragment, useLayoutEffect} from 'react';
+import React from 'react';
 import {Text, Image, StyleSheet, View, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {URL} from '../../../environment';
 
 export default function SaleItem({sale, navigation}) {
   function test() {

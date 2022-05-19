@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Button,
-  Dimensions,
-  FlatList,
   Image,
   StyleSheet,
   Text,
@@ -12,18 +9,11 @@ import {
 } from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {URL} from '../../../environment';
-import {useSelector} from 'react-redux';
-import {postSale} from '../../redux/selectors';
-import {useFetchSales} from '../../api/UseFetchSales';
-import DateField from 'react-native-datefield';
 import axios from 'axios';
 
 export default function AddProductScreen({navigation}) {
   const [name, setName] = useState();
-  const [description, setDescription] = useState();
   const [image, setImage] = useState();
-  const [imageUri, setImageUri] = useState();
-  const [source, setSource] = useState();
 
   const [price, setPrice] = useState();
   const [condition, setCondition] = useState(true);
@@ -52,10 +42,7 @@ export default function AddProductScreen({navigation}) {
     try {
       const response = await axios.post(URL + '/api/products/', {
         name: name,
-        //      description: description,
         img: image,
-        //quantity: quantity,
-        //    selling_date: year + '-' + month + '-' + day,
         price: price,
         user_id: 1,
       });

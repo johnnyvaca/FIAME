@@ -1,9 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Button,
-  Dimensions,
-  FlatList,
-  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -18,8 +14,6 @@ export default function AddTokenScreen({navigation}) {
   const {getSaleById} = useFetchSales();
   const sale = useSelector(getSelectedSale);
   const [name, setName] = useState();
-
-  const [price, setPrice] = useState();
   const [condition, setCondition] = useState(false);
 
   useEffect(() => {

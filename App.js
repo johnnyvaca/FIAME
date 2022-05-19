@@ -6,19 +6,17 @@
  * @flow strict-local
  */
 
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {
-  Button,
   Image,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {NavigationContainer, useRoute} from '@react-navigation/native';
+
+import {NavigationContainer} from '@react-navigation/native';
 import TopTabs from './src/navigation/TopTabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import DetailsScreen from './src/screens/Details';
@@ -27,7 +25,6 @@ import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 import UpdateProductScreen from './src/screens/UpdateProduct';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AddTokenScreen from './src/screens/AddToken';
 
 const Stack = createNativeStackNavigator();
 AsyncStorage.getItem('key').then(res => {
@@ -68,7 +65,7 @@ const App = () => {
             component={TopTabs}
             options={{
               headerTitle: () => {
-                Head;
+                Head();
               },
             }}
           />
