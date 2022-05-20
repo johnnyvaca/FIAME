@@ -7,12 +7,12 @@ import {
   View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {getSelectedSale} from '../../redux/selectors';
-import {useFetchSales} from '../../api/UseFetchSales';
+import {getSelectedProduct} from '../../redux/selectors';
+import {useFetchProducts} from '../../api/useFetchProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function AddTokenScreen({navigation}) {
-  const {getSaleById} = useFetchSales();
-  const sale = useSelector(getSelectedSale);
+
+  const sale = useSelector(getSelectedProduct);
   const [key, setKey] = useState();
   const [disabled, setDisabled] = useState(false);
 

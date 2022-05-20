@@ -1,2 +1,2 @@
-export const getSalesList = store => store.sales.list;
-export const getSelectedSale = store => store.sales.selectedSale;
+export const getProductsList = store => store.products.list;
+export const getSelectedProduct = store => store.products.selectedProduct;

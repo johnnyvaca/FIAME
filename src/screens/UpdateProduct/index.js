@@ -11,13 +11,13 @@ import {
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {URL} from '../../../environment';
 import {useSelector} from 'react-redux';
-import {getSelectedSale} from '../../redux/selectors';
-import {useFetchSales} from '../../api/UseFetchSales';
+import {getSelectedProduct} from '../../redux/selectors';
 import axios from 'axios';
+import {useFetchProducts} from "../../api/UseFetchProducts";
 
 export default function UpdateProductScreen({navigation, route}) {
-  const {getSaleById} = useFetchSales();
-  const sale = useSelector(getSelectedSale);
+  const {getProductById} = useFetchProducts();
+  const sale = useSelector(getSelectedProduct);
   const [name, setName] = useState(sale.name);
   const [image, setImage] = useState(sale.img);
   const [price, setPrice] = useState(sale.price);
@@ -26,7 +26,7 @@ export default function UpdateProductScreen({navigation, route}) {
 
   console.log(id);
   useEffect(() => {
-    getSaleById(id);
+    getProductById(id);
     if (name === sale.name && image === sale.img && price == sale.price) {
       setDisabled('true');
       console.log('disabled', disabled);

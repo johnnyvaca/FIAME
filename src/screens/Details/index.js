@@ -10,15 +10,14 @@ import {
 import NumericInput from 'react-native-numeric-input';
 import {URL} from '../../../environment';
 import {useSelector} from 'react-redux';
-import {getSelectedSale} from '../../redux/selectors';
-import {useFetchSales} from '../../api/UseFetchSales';
-import axios from 'axios';
-import {selectedSale} from '../../redux/actions';
-import {shouldFallbackToLegacyNativeModule} from '@react-native-async-storage/async-storage/lib/typescript/shouldFallbackToLegacyNativeModule';
+import {getSelectedProduct} from '../../redux/selectors';
 
-export const DropButton = () => {
-  <Button title="hello" />;
-};
+import axios from 'axios';
+import {selectedProduct} from '../../redux/actions';
+import {shouldFallbackToLegacyNativeModule} from '@react-native-async-storage/async-storage/lib/typescript/shouldFallbackToLegacyNativeModule';
+import {useFetchProducts} from "../../api/UseFetchProducts";
+
+
 
 export default function DetailsScreen({navigation, route}) {
   const [quantity, setQuantity] = useState(route.params.quantity);
@@ -40,8 +39,8 @@ export default function DetailsScreen({navigation, route}) {
     navigation.navigate('Home');
   }
 
-  const {getSaleById} = useFetchSales();
-  const sale = useSelector(getSelectedSale);
+  const {getProductById} = useFetchProducts();
+  const sale = useSelector(getSelectedProduct);
 
   var array = [];
 
@@ -50,7 +49,7 @@ export default function DetailsScreen({navigation, route}) {
   }
   console.log(array.length);
   useEffect(() => {
-    getSaleById(id);
+    getProductById(id);
   }, []);
   // console.log('sale: ', sale.orders);
 

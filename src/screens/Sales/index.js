@@ -8,17 +8,17 @@ import {
 } from 'react-native';
 import {useState} from 'react';
 import SaleItem from './SaleItem';
-import {useFetchSales} from '../../api/UseFetchSales';
+import {useFetchProducts} from '../../api/UseFetchProducts';
 import {useSelector} from 'react-redux';
-import {getSalesList} from '../../redux/selectors';
+import {getProductsList} from '../../redux/selectors';
 import axios from 'axios';
 import {URL} from '../../../environment';
 
 export default function SalesScreen({navigation}) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(true);
-  const allSales = useSelector(getSalesList);
-  const {getAllSales} = useFetchSales();
+  const allSales = useSelector(getProductsList);
+  const {getAllSales} = useFetchProducts();
 
   function fetchData() {
     fetch(URL + '/api/products')
