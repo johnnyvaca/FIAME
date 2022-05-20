@@ -1,18 +1,13 @@
 import React, {useEffect} from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useState} from 'react';
-import SaleItem from './SaleItem';
+
 import {useFetchProducts} from '../../api/UseFetchProducts';
 import {useSelector} from 'react-redux';
 import {getProductsList} from '../../redux/selectors';
 import axios from 'axios';
 import {URL} from '../../../environment';
+import ProductItem from './ProductItem';
 
 export default function SalesScreen({navigation}) {
   const [loading, setLoading] = useState(true);
@@ -32,7 +27,7 @@ export default function SalesScreen({navigation}) {
     fetchData();
   }, []);
   const renderItem = ({item}) => {
-    return <SaleItem sale={item} navigation={navigation} />;
+    return <ProductItem sale={item} navigation={navigation} />;
   };
 
   return (

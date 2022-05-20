@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import SalesScreen from '../screens/Sales';
+import SalesScreen from '../screens/Products';
 import AddTokenScreen from '../screens/AddToken';
 
 const TopTab = createMaterialTopTabNavigator();
 
 export default function TopTabs() {
-
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
   return (
     <TopTab.Navigator>
       <TopTab.Screen name="futur" component={SalesScreen} />

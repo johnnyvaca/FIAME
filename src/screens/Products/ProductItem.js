@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 
-export default function SaleItem({sale, navigation}) {
+export default function ProductItem({sale, navigation}) {
   function onPress() {
     navigation.navigate('Details', {id: sale.id});
   }
