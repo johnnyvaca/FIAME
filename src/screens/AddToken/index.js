@@ -10,17 +10,19 @@ import {useSelector} from 'react-redux';
 import {getSelectedProduct} from '../../redux/selectors';
 import {useFetchProducts} from '../../api/useFetchProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useIsFocused} from '@react-navigation/native';
 export default function AddTokenScreen({navigation}) {
-
+  const isFocused = useIsFocused();
   const product = useSelector(getSelectedProduct);
   const [key, setKey] = useState();
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
+    key;
     AsyncStorage.getItem('key').then(res => {
       setKey(res);
     });
-  }, []);
+  }, [isFocused]);
 
   function Save() {
     AsyncStorage.setItem('key', key);
