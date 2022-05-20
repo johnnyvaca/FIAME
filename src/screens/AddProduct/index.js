@@ -32,7 +32,7 @@ export default function AddProductScreen({navigation}) {
       setDisabled(false);
     }
   }, [name, price, image, disabled]);
-  const postSale = async () => {
+  const postProduct = async () => {
     try {
       const response = await axios.post(URL + '/api/products/', {
         name: name,
@@ -47,7 +47,7 @@ export default function AddProductScreen({navigation}) {
   };
 
   function PostProduct() {
-    postSale();
+    postProduct();
     navigation.navigate('Home');
   }
 

@@ -1,22 +1,22 @@
-import {GET_SALES, GET_SALE_ID} from '../actions/actionsTypes';
+import {GET_PRODUCTS, GET_PRODUCT_ID} from '../actions/actionsTypes';
 
 const initialState = {
   list: [],
-  selectedSale: {},
-  postSale: {},
+  selectedProduct: {},
+  postProduct: {},
 };
 
-export const sales = (state = initialState, action) => {
+export const products = (state = initialState, action) => {
   switch (action.type) {
-    case GET_SALES:
+    case GET_PRODUCTS:
       return {
         list: [...state.list, ...action.payload.data],
-        selectedSale: state.selectedSale,
+        selectedProduct: state.selectedProduct,
       };
-    case GET_SALE_ID:
+    case GET_PRODUCT_ID:
       return {
         list: state.list,
-        selectedSale: action.payload.data,
+        selectedProduct: action.payload.data,
       };
     default:
       return state;

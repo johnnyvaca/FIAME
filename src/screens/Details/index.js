@@ -15,18 +15,18 @@ import {getSelectedProduct} from '../../redux/selectors';
 import axios from 'axios';
 import {selectedProduct} from '../../redux/actions';
 import {shouldFallbackToLegacyNativeModule} from '@react-native-async-storage/async-storage/lib/typescript/shouldFallbackToLegacyNativeModule';
-import {useFetchProducts} from "../../api/UseFetchProducts";
-
-
+import {useFetchProducts} from '../../api/UseFetchProducts';
 
 export default function DetailsScreen({navigation, route}) {
   const [quantity, setQuantity] = useState(route.params.quantity);
   const [order, setOrder] = useState();
   const {id} = route.params;
+
   function updateScreen() {
     navigation.navigate('UpdateProduct', {id: id});
   }
-  const deleteSale = async idDelete => {
+
+  const deleteProduct = async idDelete => {
     try {
       const response = await axios.delete(URL + '/api/products/' + idDelete);
     } catch (e) {
@@ -34,24 +34,24 @@ export default function DetailsScreen({navigation, route}) {
     }
   };
 
-  function deleteProduct() {
-    deleteSale(id);
+  function DeleteProduct() {
+    deleteProduct(id);
     navigation.navigate('Home');
   }
 
   const {getProductById} = useFetchProducts();
-  const sale = useSelector(getSelectedProduct);
+  const product = useSelector(getSelectedProduct);
 
   var array = [];
 
-  for (let prop in sale.orders) {
-    array.push(sale.orders[prop]);
+  for (let prop in product.orders) {
+    array.push(product.orders[prop]);
   }
   console.log(array.length);
   useEffect(() => {
     getProductById(id);
   }, []);
-  // console.log('sale: ', sale.orders);
+  // console.log('product: ', product.orders);
 
   return (
     <View style={styles.container}>
@@ -59,7 +59,7 @@ export default function DetailsScreen({navigation, route}) {
 
       {/* eslint-disable-next-line react-native/no-inline-styles */}
       <View style={{flex: 6}}>
-        <Image source={{uri: sale.img}} style={styles.image} />
+        <Image source={{uri: product.img}} style={styles.image} />
       </View>
       <View
         style={{
@@ -72,10 +72,10 @@ export default function DetailsScreen({navigation, route}) {
           borderTopWidth: 3,
           borderBottomWidth: 3,
         }}>
-        <Text style={styles.textes}>{sale.name}</Text>
-        <Text style={styles.textes}>{sale.selling_date}</Text>
-        <Text style={styles.textes}>{sale.user_id}</Text>
-        <Text style={styles.textes}>{sale.price}.- CHF</Text>
+        <Text style={styles.textes}>{product.name}</Text>
+        <Text style={styles.textes}>{product.selling_date}</Text>
+        <Text style={styles.textes}>{product.user_id}</Text>
+        <Text style={styles.textes}>{product.price}.- CHF</Text>
       </View>
       <View
         style={{
@@ -118,7 +118,7 @@ export default function DetailsScreen({navigation, route}) {
           Payés
         </Text>
         <Text style={{fontWeight: 'bold', fontSize: 20, paddingRight: 50}}>
-          {sale.paid} plats
+          {product.paid} plats
         </Text>
       </View>
       <View
@@ -138,7 +138,7 @@ export default function DetailsScreen({navigation, route}) {
             fontSize: 20,
             paddingRight: 50,
           }}>
-          {(sale.quantity - sale.paid) * sale.price}.- CHF
+          {(product.quantity - product.paid) * product.price}.- CHF
         </Text>
       </View>
       <View
@@ -152,7 +152,7 @@ export default function DetailsScreen({navigation, route}) {
         }}>
         <TouchableOpacity
           onPress={() => {
-              deleteProduct();
+            DeleteProduct();
           }}>
           <Image
             style={array.length === 0 ? {} : {width: '0%', height: '0%'}}

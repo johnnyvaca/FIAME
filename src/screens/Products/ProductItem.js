@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text, Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 
-export default function ProductItem({sale, navigation}) {
+export default function ProductItem({product, navigation}) {
   function onPress() {
-    navigation.navigate('Details', {id: sale.id});
+    navigation.navigate('Details', {id: product.id});
   }
   return (
     <View style={styles.container}>
@@ -20,15 +20,15 @@ export default function ProductItem({sale, navigation}) {
           alignItems: 'center',
         }}>
         <View style={styles.viewImage}>
-          <Image source={{uri: sale.img}} style={styles.image} />
+          <Image source={{uri: product.img}} style={styles.image} />
         </View>
         <View>
-          <Text style={styles.title}>{sale.name}</Text>
-          <Text style={styles.title}>{sale.selling_date}</Text>
-          <Text style={styles.title}>{sale.user_id}</Text>
+          <Text style={styles.title}>{product.name}</Text>
+          <Text style={styles.title}>{product.selling_date}</Text>
+          <Text style={styles.title}>{product.user_id}</Text>
         </View>
         <Text style={{fontSize: 30, position: 'absolute', right: 10}}>
-          {sale.price}.-
+          {product.price}.-
         </Text>
       </TouchableOpacity>
     </View>

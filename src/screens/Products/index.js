@@ -9,11 +9,11 @@ import axios from 'axios';
 import {URL} from '../../../environment';
 import ProductItem from './ProductItem';
 
-export default function SalesScreen({navigation}) {
+export default function ProductScreen({navigation}) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(true);
-  const allSales = useSelector(getProductsList);
-  const {getAllSales} = useFetchProducts();
+  const allProducts = useSelector(getProductsList);
+  const {getAllProducts} = useFetchProducts();
 
   function fetchData() {
     fetch(URL + '/api/products')
@@ -27,7 +27,7 @@ export default function SalesScreen({navigation}) {
     fetchData();
   }, []);
   const renderItem = ({item}) => {
-    return <ProductItem sale={item} navigation={navigation} />;
+    return <ProductItem product={item} navigation={navigation} />;
   };
 
   return (

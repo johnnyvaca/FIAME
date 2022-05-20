@@ -12,7 +12,7 @@ import {useFetchProducts} from '../../api/useFetchProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function AddTokenScreen({navigation}) {
 
-  const sale = useSelector(getSelectedProduct);
+  const product = useSelector(getSelectedProduct);
   const [key, setKey] = useState();
   const [disabled, setDisabled] = useState(false);
 

@@ -13,21 +13,25 @@ import {URL} from '../../../environment';
 import {useSelector} from 'react-redux';
 import {getSelectedProduct} from '../../redux/selectors';
 import axios from 'axios';
-import {useFetchProducts} from "../../api/UseFetchProducts";
+import {useFetchProducts} from '../../api/UseFetchProducts';
 
 export default function UpdateProductScreen({navigation, route}) {
   const {getProductById} = useFetchProducts();
-  const sale = useSelector(getSelectedProduct);
-  const [name, setName] = useState(sale.name);
-  const [image, setImage] = useState(sale.img);
-  const [price, setPrice] = useState(sale.price);
+  const product = useSelector(getSelectedProduct);
+  const [name, setName] = useState(product.name);
+  const [image, setImage] = useState(product.img);
+  const [price, setPrice] = useState(product.price);
   const [disabled, setDisabled] = useState('true');
   const {id} = route.params;
 
   console.log(id);
   useEffect(() => {
     getProductById(id);
-    if (name === sale.name && image === sale.img && price == sale.price) {
+    if (
+      name === product.name &&
+      image === product.img &&
+      price == product.price
+    ) {
       setDisabled('true');
       console.log('disabled', disabled);
     } else {
@@ -35,7 +39,7 @@ export default function UpdateProductScreen({navigation, route}) {
       console.log('disabled', disabled);
     }
   }, [name, price, image, disabled]);
-  const putSale = async () => {
+  const putProduct = async () => {
     try {
       const response = await axios.put(URL + '/api/products/' + id, {
         name: name,
@@ -49,7 +53,7 @@ export default function UpdateProductScreen({navigation, route}) {
   };
 
   function save() {
-    putSale();
+    putProduct();
     navigation.navigate('Home');
   }
   function cancel() {
@@ -69,13 +73,13 @@ export default function UpdateProductScreen({navigation, route}) {
         console.log('Cancel upload image');
       } else if (response.errorCode === 'permission') {
         console.log('Not permission');
-        Alert.alert('vous n\'avez pas la permission');
+        Alert.alert("vous n'avez pas la permission");
       } else if (response.errorCode === 'other') {
         console.log('other error');
         Alert.alert('erreur inconnue');
       } else if (response.assets[0].fileSize > 8000000) {
         console.log('max 8MB', response.assets[0].fileSize);
-        Alert.alert('l\'image est trop grande. MAX:8MG');
+        Alert.alert("l'image est trop grande. MAX:8MG");
       } else {
         setImage(
           'data:' +
@@ -99,7 +103,7 @@ export default function UpdateProductScreen({navigation, route}) {
         console.log('Cancel upload image');
       } else if (response.errorCode === 'permission') {
         console.log('Not permission');
-        Alert.alert('vous n\'avez pas la permission');
+        Alert.alert("vous n'avez pas la permission");
       } else if (response.errorCode === 'other') {
         console.log('other error');
         Alert.alert('erreur inconnue');
@@ -141,7 +145,6 @@ export default function UpdateProductScreen({navigation, route}) {
         <TouchableOpacity
           onPress={() => {
             openCamera();
-
           }}
           style={[
             styles.inputText,
