@@ -20,10 +20,10 @@ export default function ProductItem({product, navigation}) {
           alignItems: 'center',
         }}>
         <View style={styles.viewImage}>
-          <Image source={{uri: product.img}} style={styles.image} />
+          <Image source={{uri: product.image}} style={styles.image} />
         </View>
         <View>
-          <Text style={styles.title}>{product.name}</Text>
+          <Text style={styles.title}>{product.title}</Text>
           <Text style={styles.title}>{product.selling_date}</Text>
           <Text style={styles.title}>{product.user_id}</Text>
         </View>

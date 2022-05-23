@@ -8,7 +8,7 @@
 
 import React from 'react';
 
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import TopTabs from './src/navigation/TopTabs';
@@ -25,7 +25,9 @@ const Header = () => {
   return (
     <View style={{flex: 1, paddingTop: 10}}>
       <Text style={{fontSize: 30, fontWeight: 'bold'}}>Fiame</Text>
-      <Image source={require('./assets/icons/user.png')} style={styles.icon} />
+      <TouchableOpacity style={{backgroundColor:'blue'}}>
+
+      </TouchableOpacity>
     </View>
   );
 };

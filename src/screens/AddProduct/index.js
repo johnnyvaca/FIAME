@@ -12,7 +12,7 @@ import {URL} from '../../../environment';
 import axios from 'axios';
 
 export default function AddProductScreen({navigation}) {
-  const [name, setName] = useState();
+  const [title, setTitle] = useState();
   const [image, setImage] = useState();
 
   const [price, setPrice] = useState();
@@ -20,8 +20,8 @@ export default function AddProductScreen({navigation}) {
 
   useEffect(() => {
     if (
-      name === undefined ||
-      name === '' ||
+      title === undefined ||
+      title === '' ||
       price === undefined ||
       price === '' ||
       image === undefined ||
@@ -31,13 +31,14 @@ export default function AddProductScreen({navigation}) {
     } else {
       setDisabled(false);
     }
-  }, [name, price, image, disabled]);
+  }, [title, price, image, disabled]);
   const postProduct = async () => {
     try {
-      const response = await axios.post(URL + '/api/products/', {
-        name: name,
-        img: image,
+      const response = await axios.post(URL + '/products/', {
+        title: title,
+        image: image,
         price: price,
+        description: 'hello',
         user_id: 1,
       });
 
@@ -113,7 +114,7 @@ export default function AddProductScreen({navigation}) {
   return (
     <View style={styles.container}>
       <TextInput
-        onChangeText={name => setName(name)}
+        onChangeText={title => setTitle(title)}
         style={styles.inputText}
         placeholder="Choisir un nom"
       />

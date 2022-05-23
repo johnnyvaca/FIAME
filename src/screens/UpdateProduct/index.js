@@ -19,7 +19,7 @@ export default function UpdateProductScreen({navigation, route}) {
   const {getProductById} = useFetchProducts();
   const product = useSelector(getSelectedProduct);
   const [name, setName] = useState(product.name);
-  const [image, setImage] = useState(product.img);
+  const [image, setImage] = useState(product.image);
   const [price, setPrice] = useState(product.price);
   const [disabled, setDisabled] = useState('true');
   const {id} = route.params;
@@ -29,7 +29,7 @@ export default function UpdateProductScreen({navigation, route}) {
     getProductById(id);
     if (
       name === product.name &&
-      image === product.img &&
+      image === product.image &&
       price == product.price
     ) {
       setDisabled('true');
@@ -41,9 +41,9 @@ export default function UpdateProductScreen({navigation, route}) {
   }, [name, price, image, disabled]);
   const putProduct = async () => {
     try {
-      const response = await axios.put(URL + '/api/products/' + id, {
+      const response = await axios.put(URL + '/products/' + id, {
         name: name,
-        img: image,
+        image: image,
         price: price,
         user_id: 1,
       });

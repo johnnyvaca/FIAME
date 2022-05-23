@@ -11,14 +11,13 @@ import ProductItem from './ProductItem';
 import {useIsFocused} from '@react-navigation/native';
 
 export default function ProductScreen({navigation}) {
-
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(true);
   const allProducts = useSelector(getProductsList);
   const {getAllProducts} = useFetchProducts();
   const isFocused = useIsFocused();
   function fetchData() {
-    fetch(URL + '/api/products')
+    fetch(URL + '/products')
       .then(res => res.json())
       .then(results => {
         setData(results);
@@ -27,7 +26,7 @@ export default function ProductScreen({navigation}) {
   }
   useEffect(() => {
     fetchData();
-  }, [isFocused, loading, data]);
+  }, [isFocused, loading]);
   const renderItem = ({item}) => {
     return <ProductItem product={item} navigation={navigation} />;
   };

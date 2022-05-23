@@ -28,7 +28,7 @@ export default function DetailsScreen({navigation, route}) {
 
   const deleteProduct = async idDelete => {
     try {
-      const response = await axios.delete(URL + '/api/products/' + idDelete);
+      const response = await axios.delete(URL + '/products/' + idDelete);
     } catch (e) {
       console.error('Error', e);
     }
@@ -59,7 +59,7 @@ export default function DetailsScreen({navigation, route}) {
 
       {/* eslint-disable-next-line react-native/no-inline-styles */}
       <View style={{flex: 6}}>
-        <Image source={{uri: product.img}} style={styles.image} />
+        <Image source={{uri: product.image}} style={styles.image} />
       </View>
       <View
         style={{
@@ -72,7 +72,7 @@ export default function DetailsScreen({navigation, route}) {
           borderTopWidth: 3,
           borderBottomWidth: 3,
         }}>
-        <Text style={styles.textes}>{product.name}</Text>
+        <Text style={styles.textes}>{product.title}</Text>
         <Text style={styles.textes}>{product.selling_date}</Text>
         <Text style={styles.textes}>{product.user_id}</Text>
         <Text style={styles.textes}>{product.price}.- CHF</Text>
