@@ -10,7 +10,7 @@ import {URL} from '../../../environment';
 import ProductItem from './ProductItem';
 import {useIsFocused} from '@react-navigation/native';
 
-export default function ProductScreen({navigation}) {
+export default function PurchaseScreen({navigation}) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(true);
   const allProducts = useSelector(getProductsList);
