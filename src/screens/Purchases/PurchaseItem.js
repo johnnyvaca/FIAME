@@ -1,7 +1,15 @@
 import React from 'react';
 import {Text, Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 
-export default function ProductItem({product, navigation}) {
+export default function PurchaseItem({product, navigation}) {
+  var array = [];
+
+  console.log('pivot', product.item.title)
+
+  for (let prop in product.item) {
+    array.push(product.item[prop]);
+  }
+  console.log('items', array);
   function onPress() {
     navigation.navigate('Details', {id: product.id});
   }
@@ -20,15 +28,14 @@ export default function ProductItem({product, navigation}) {
           alignItems: 'center',
         }}>
         <View style={styles.viewImage}>
-          <Image source={{uri: product.image}} style={styles.image} />
+          <Image source={{uri: product.item.image}} style={styles.image} />
         </View>
         <View>
-          <Text style={styles.title}>{product.title}</Text>
-          <Text style={styles.title}>{product.selling_date}</Text>
-          <Text style={styles.title}>{product.user_id}</Text>
+          <Text style={styles.title}>{product.item.title}</Text>
+          <Text style={styles.title}>{product.item.user_id}</Text>
         </View>
         <Text style={{fontSize: 30, position: 'absolute', right: 10}}>
-          {product.price}.-
+          {product.item.price}.-
         </Text>
       </TouchableOpacity>
     </View>

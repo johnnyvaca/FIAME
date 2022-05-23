@@ -1,5 +1,12 @@
 import React, {useEffect} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useState} from 'react';
 
 import {useFetchProducts} from '../../api/UseFetchProducts';
@@ -7,28 +14,46 @@ import {useSelector} from 'react-redux';
 import {getProductsList} from '../../redux/selectors';
 import axios from 'axios';
 import {URL} from '../../../environment';
-import ProductItem from './ProductItem';
+
 import {useIsFocused} from '@react-navigation/native';
+import PurchaseItem from './PurchaseItem';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PurchaseScreen({navigation}) {
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState(true);
   const [data, setData] = useState(true);
   const allProducts = useSelector(getProductsList);
   const {getAllProducts} = useFetchProducts();
   const isFocused = useIsFocused();
+
+  AsyncStorage.getItem('key').then(res => {
+    setToken(res);
+  });
+
   function fetchData() {
-    fetch(URL + '/products')
+    fetch(URL + '/mypurchases', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    })
       .then(res => res.json())
       .then(results => {
         setData(results);
+        console.log('data', data);
         setLoading(false);
+      })
+      .catch(function (error) {
+        Alert.alert(error); // Using this line
       });
   }
   useEffect(() => {
     fetchData();
-  }, [isFocused, loading, data]);
+  }, [isFocused, loading]);
   const renderItem = ({item}) => {
-    return <ProductItem product={item} navigation={navigation} />;
+    return <PurchaseItem product={item} navigation={navigation} />;
   };
 
   return (
