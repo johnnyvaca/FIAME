@@ -26,7 +26,7 @@ export default function ProductScreen({navigation}) {
   }
   useEffect(() => {
     fetchData();
-  }, [isFocused, loading, data]);
+  }, [isFocused, loading]);
   const renderItem = ({item}) => {
     return <ProductItem product={item} navigation={navigation} />;
   };
