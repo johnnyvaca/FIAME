@@ -23,6 +23,7 @@ export default function PurchaseScreen({navigation}) {
   const [loading, setLoading] = useState(true);
 
   const [data, setData] = useState(true);
+  const [oldData, setOldData] = useState(true);
   const allProducts = useSelector(getProductsList);
   const {getAllProducts} = useFetchProducts();
   const isFocused = useIsFocused();
@@ -51,6 +52,7 @@ export default function PurchaseScreen({navigation}) {
   }
   useEffect(() => {
     fetchData();
+
   }, [isFocused, loading]);
   const renderItem = ({item}) => {
     return <PurchaseItem product={item} navigation={navigation} />;

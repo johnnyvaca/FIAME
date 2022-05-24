@@ -7,14 +7,14 @@ import {useSelector} from 'react-redux';
 import {getProductsList} from '../../redux/selectors';
 import axios from 'axios';
 import {URL} from '../../../environment';
-
+import ProductItem from './ProductItem';
 import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ProductOldItem from './ProductOldItem';
 
-export default function ProductScreen({navigation}) {
+export default function ProductOldScreen({navigation}) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(true);
+  const [oldData, setOldData] = useState(true);
   const allProducts = useSelector(getProductsList);
   const {getAllProducts} = useFetchProducts();
   const isFocused = useIsFocused();
@@ -31,6 +31,10 @@ export default function ProductScreen({navigation}) {
       .then(res => res.json())
       .then(results => {
         setData(results);
+        console.log('data old', data);
+        for (let userObject of data) {
+          userObject.username;
+        }
         setLoading(false);
       });
   }
@@ -41,7 +45,7 @@ export default function ProductScreen({navigation}) {
     fetchData();
   }, [isFocused, loading]);
   const renderItem = ({item}) => {
-    return <ProductOldItem product={item} navigation={navigation} />;
+    return <ProductItem product={item} navigation={navigation} />;
   };
 
   return (

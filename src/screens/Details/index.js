@@ -21,6 +21,7 @@ export default function DetailsScreen({navigation, route}) {
   const [quantity, setQuantity] = useState(route.params.quantity);
   const [order, setOrder] = useState();
   const {id} = route.params;
+  console.log('id', id);
 
   function updateScreen() {
     navigation.navigate('UpdateProduct', {id: id});
@@ -72,7 +73,7 @@ export default function DetailsScreen({navigation, route}) {
           borderTopWidth: 3,
           borderBottomWidth: 3,
         }}>
-        <Text style={styles.textes}>{product.item.name}</Text>
+        <Text style={styles.textes}>{product.name}</Text>
         <Text style={styles.textes}>{product.selling_date}</Text>
         <Text style={styles.textes}>{product.user_id}</Text>
         <Text style={styles.textes}>{product.price}.- CHF</Text>
