@@ -21,12 +21,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PurchaseScreen({navigation}) {
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState(true);
+
   const [data, setData] = useState(true);
   const allProducts = useSelector(getProductsList);
   const {getAllProducts} = useFetchProducts();
   const isFocused = useIsFocused();
-
+  const [token, setToken] = useState(true);
   AsyncStorage.getItem('key').then(res => {
     setToken(res);
   });

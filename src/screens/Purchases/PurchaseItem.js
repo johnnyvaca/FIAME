@@ -1,13 +1,14 @@
 import React from 'react';
 import {Text, Image, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {useState} from '@types/react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PurchaseItem({product, navigation}) {
+
   var array = [];
 
-  console.log('pivot', product.item.title)
-
-  for (let prop in product.item) {
-    array.push(product.item[prop]);
+  for (let prop in product) {
+    array.push(product[prop]);
   }
   console.log('items', array);
   function onPress() {
@@ -28,14 +29,15 @@ export default function PurchaseItem({product, navigation}) {
           alignItems: 'center',
         }}>
         <View style={styles.viewImage}>
-          <Image source={{uri: product.item.image}} style={styles.image} />
+          <Image source={{uri: product.img}} style={styles.image} />
         </View>
         <View>
-          <Text style={styles.title}>{product.item.title}</Text>
-          <Text style={styles.title}>{product.item.user_id}</Text>
+          <Text style={styles.title}>{product.product}</Text>
+          <Text style={styles.title}>{product.made_by}</Text>
+          <Text style={styles.title}>{product.quantity} commandes</Text>
         </View>
         <Text style={{fontSize: 30, position: 'absolute', right: 10}}>
-          {product.item.price}.-
+          {product.price}.-
         </Text>
       </TouchableOpacity>
     </View>

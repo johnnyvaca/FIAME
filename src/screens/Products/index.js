@@ -9,6 +9,7 @@ import axios from 'axios';
 import {URL} from '../../../environment';
 import ProductItem from './ProductItem';
 import {useIsFocused} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProductScreen({navigation}) {
   const [loading, setLoading] = useState(true);
@@ -16,8 +17,16 @@ export default function ProductScreen({navigation}) {
   const allProducts = useSelector(getProductsList);
   const {getAllProducts} = useFetchProducts();
   const isFocused = useIsFocused();
+  const [token, setToken] = useState(true);
+
   function fetchData() {
-    fetch(URL + '/products')
+    fetch(URL + '/products', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    })
       .then(res => res.json())
       .then(results => {
         setData(results);
@@ -25,6 +34,9 @@ export default function ProductScreen({navigation}) {
       });
   }
   useEffect(() => {
+    AsyncStorage.getItem('key').then(res => {
+      setToken(res);
+    });
     fetchData();
   }, [isFocused, loading]);
   const renderItem = ({item}) => {

@@ -72,7 +72,7 @@ export default function DetailsScreen({navigation, route}) {
           borderTopWidth: 3,
           borderBottomWidth: 3,
         }}>
-        <Text style={styles.textes}>{product.title}</Text>
+        <Text style={styles.textes}>{product.item.name}</Text>
         <Text style={styles.textes}>{product.selling_date}</Text>
         <Text style={styles.textes}>{product.user_id}</Text>
         <Text style={styles.textes}>{product.price}.- CHF</Text>

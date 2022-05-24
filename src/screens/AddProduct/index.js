@@ -10,18 +10,23 @@ import {
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {URL} from '../../../environment';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddProductScreen({navigation}) {
-  const [title, setTitle] = useState();
+  const [name, setName] = useState();
   const [image, setImage] = useState();
 
   const [price, setPrice] = useState();
   const [disabled, setDisabled] = useState(true);
+  const [token, setToken] = useState(true);
+  AsyncStorage.getItem('key').then(res => {
+    setToken(res);
+  });
 
   useEffect(() => {
     if (
-      title === undefined ||
-      title === '' ||
+      name === undefined ||
+      name === '' ||
       price === undefined ||
       price === '' ||
       image === undefined ||
@@ -31,17 +36,26 @@ export default function AddProductScreen({navigation}) {
     } else {
       setDisabled(false);
     }
-  }, [title, price, image, disabled]);
+  }, [name, price, image, disabled]);
   const postProduct = async () => {
     try {
-      const response = await axios.post(URL + '/products/', {
-        title: title,
-        image: image,
-        price: price,
-        description: 'hello',
-        user_id: 1,
-      });
-
+      const response = await axios.post(
+        URL + '/products/',
+        {
+          name: name,
+          img: image,
+          price: price,
+          description: 'hello',
+          user_id: 1,
+        },
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        },
+      );
     } catch (e) {
       console.error('Error', e);
     }
@@ -114,7 +128,7 @@ export default function AddProductScreen({navigation}) {
   return (
     <View style={styles.container}>
       <TextInput
-        onChangeText={title => setTitle(title)}
+        onChangeText={name => setName(name)}
         style={styles.inputText}
         placeholder="Choisir un nom"
       />
