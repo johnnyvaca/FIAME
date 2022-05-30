@@ -82,7 +82,7 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          {validation === false && (
+          {(validation === false || validation === undefined) && (
             <Stack.Screen
               name="AddTokenInit"
               component={AddTokenInitScreen}
