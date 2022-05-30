@@ -33,7 +33,6 @@ export default function PurchaseScreen({navigation}) {
   });
 
   function fetchData() {
-    if (token === '48TtL8VT2mSest9DBQoLse6MnEZMTU') {
     if (token !== '48TtL8VT2mSest9DBQoLse6MnEZMTU') {
       console.log('token', token);
       fetch(URL + '/mypurchases', {
