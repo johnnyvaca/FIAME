@@ -49,7 +49,7 @@ export default function AddProductScreen({navigation}) {
           user_id: 1,
         },
         {
-          method: 'GET',
+          method: 'POST',
           headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + token,

@@ -8,7 +8,12 @@ export const useFetchProducts = () => {
   const dispatch = useDispatch();
   const getAllProducts = async () => {
     try {
-      const response = await axios.get(URL + '/products');
+      const response = await axios.get(URL + '/products', {
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + 'OIcO1HoDgp0fQz2EFMxXMuCCNtVHDr',
+        },
+      });
       dispatch(addProducts(response.data));
     } catch (e) {
       console.error('Error in getAllProducts', e);

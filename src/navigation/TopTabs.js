@@ -8,13 +8,12 @@ import ProductOldScreen from '../screens/ProductsOld';
 const TopTab = createMaterialTopTabNavigator();
 
 export default function TopTabs() {
-  useEffect(() => {}, []);
   return (
     <TopTab.Navigator>
       <TopTab.Screen name="futur" component={ProductScreen} />
       <TopTab.Screen name="avant" component={ProductOldScreen} />
       <TopTab.Screen name="mes achats" component={PurchaseScreen} />
-      <TopTab.Screen name="clef" component={AddTokenScreen} />
+      {/*   <TopTab.Screen name="clef" component={AddTokenScreen} /> */}
     </TopTab.Navigator>
   );
 }

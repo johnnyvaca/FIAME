@@ -33,6 +33,44 @@ export default function PurchaseScreen({navigation}) {
   });
 
   function fetchData() {
+    if (token === '48TtL8VT2mSest9DBQoLse6MnEZMTU') {
+      fetch(URL + '/mypurchases', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      })
+        .then(res => res.json())
+        .then(results => {
+          setData(results);
+          console.log('data', data);
+          setLoading(false);
+        })
+        .catch(function (error) {
+          Alert.alert(error); // Using this line
+        });
+    } else {
+      fetch(URL + '/users', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      })
+        .then(res => res.json())
+        .then(results => {
+          setData(results);
+          console.log('users', data);
+          setLoading(false);
+        })
+        .catch(function (error) {
+          Alert.alert(error); // Using this line
+        });
+    }
+  }
+
+  function fetchData2() {
     fetch(URL + '/mypurchases', {
       method: 'GET',
       headers: {
@@ -43,18 +81,22 @@ export default function PurchaseScreen({navigation}) {
       .then(res => res.json())
       .then(results => {
         setData(results);
-        console.log('data', data);
+        console.log('authentication', data);
         setLoading(false);
       })
       .catch(function (error) {
+        console.log('authentication3', data);
         Alert.alert(error); // Using this line
       });
   }
   useEffect(() => {
     fetchData();
-
+    fetchData2();
   }, [isFocused, loading]);
   const renderItem = ({item}) => {
+    return <PurchaseItem product={item} navigation={navigation} />;
+  };
+  const renderUsers = ({item}) => {
     return <PurchaseItem product={item} navigation={navigation} />;
   };
 
@@ -72,7 +114,9 @@ export default function PurchaseScreen({navigation}) {
       <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={renderItem}
+        renderItem={
+          token === '48TtL8VT2mSest9DBQoLse6MnEZMTU' ? renderItem : renderUsers
+        }
         onRefresh={() => fetchData()}
         refreshing={loading}
       />

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
   StyleSheet,
@@ -12,19 +12,17 @@ import {getSelectedProduct} from '../../redux/selectors';
 import {useFetchProducts} from '../../api/useFetchProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
-import axios from 'axios';
 import {URL} from '../../../environment';
-export default function AddTokenScreen({navigation}) {
+import axios from 'axios';
+import {addProducts} from '../../redux/actions';
+export default function AddTokenInitScreen({navigation}) {
   const isFocused = useIsFocused();
-  const product = useSelector(getSelectedProduct);
   const [key, setKey] = useState();
-  const [validation, setValidation] = useState();
   const [disabled, setDisabled] = useState(false);
 
-  const getAllProducts = async key => {
-    AsyncStorage.getItem('key').then(res => {
-      setKey(res);
-    });
+  const [response, setResponse] = useState();
+
+  const getAllProducts = async () => {
     try {
       const response = await axios.get(URL + '/mypurchases', {
         headers: {
@@ -32,46 +30,22 @@ export default function AddTokenScreen({navigation}) {
           authorization: 'Bearer ' + key,
         },
       });
-      setValidation(true);
-      console.log('true val444', validation);
+      setResponse(true);
+      console.log('key333', key);
+      navigation.navigate('Home');
     } catch (e) {
-      setValidation(false);
-      console.log('false val4444', validation);
-
-      //Alert.alert('mauvaise authentification');
-      //console.error('Error2 in getAllProducts', e.error);
+      console.log('key333', key);
+      Alert.alert('mauvaise authentification');
     }
   };
 
-  useEffect(() => {
-    getAllProducts(key);
-    if (!validation) {
-      navigation.navigate('AddTokenInit2');
-    }
-
-    // key;
-    // AsyncStorage.getItem('key').then(res => {
-    //   setKey(res);
-    // });
-  }, [isFocused]);
-
   function Save() {
     AsyncStorage.setItem('key', key);
-    //getAllProducts(key);
-    if (validation) {
-      navigation.navigate('mes achats');
-    } else {
-      navigation.navigate('AddTokenInit2');
-      //Alert.alert('mauvaise authentification');
-    }
-  }
-  function Cancel() {
-    navigation.navigate('Home');
+    getAllProducts();
   }
 
   return (
     <View style={styles.container}>
-      {/*
       <TextInput
         onChangeText={key => setKey(key)}
         style={styles.inputText}
@@ -85,15 +59,7 @@ export default function AddTokenScreen({navigation}) {
           marginLeft: 0,
         }}>
         <TouchableOpacity
-          onPress={() => Cancel()}
-          style={[
-            styles.inputText,
-            {backgroundColor: '#c40e0e', width: '48%'},
-          ]}>
-          <Text style={{color: '#fff', textAlign: 'center'}}>Annuler</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          disabled={disabled}
+          //disabled={disabled}
           onPress={() => {
             Save();
           }}
@@ -102,10 +68,9 @@ export default function AddTokenScreen({navigation}) {
               ? [styles.disabled, {backgroundColor: '#848f98', width: '48%'}]
               : [styles.inputText, {backgroundColor: '#084572', width: '48%'}]
           }>
-          <Text style={{color: '#fff', textAlign: 'center'}}>Modifier</Text>
+          <Text style={{color: '#fff', textAlign: 'center'}}>Commencer</Text>
         </TouchableOpacity>
       </View>
-      */}
     </View>
   );
 }

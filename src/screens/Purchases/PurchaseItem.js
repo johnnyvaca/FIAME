@@ -10,7 +10,7 @@ export default function PurchaseItem({product, navigation}) {
   for (let prop in product) {
     array.push(product[prop]);
   }
-  console.log('items', array);
+  //console.log('items', array);
   function onPress() {
     navigation.navigate('Details', {id: product.id});
   }

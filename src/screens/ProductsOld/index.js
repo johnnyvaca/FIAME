@@ -31,9 +31,10 @@ export default function ProductOldScreen({navigation}) {
       .then(res => res.json())
       .then(results => {
         setData(results);
-        console.log('data old', data);
+        console.log(data);
         for (let userObject of data) {
           userObject.username;
+          console.log('orders', userObject.orders);
         }
         setLoading(false);
       });
