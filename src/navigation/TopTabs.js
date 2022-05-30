@@ -11,7 +11,6 @@ export default function TopTabs() {
   return (
     <TopTab.Navigator>
       <TopTab.Screen name="futur" component={ProductScreen} />
-      <TopTab.Screen name="avant" component={ProductOldScreen} />
       <TopTab.Screen name="mes achats" component={PurchaseScreen} />
       {/*   <TopTab.Screen name="clef" component={AddTokenScreen} /> */}
     </TopTab.Navigator>

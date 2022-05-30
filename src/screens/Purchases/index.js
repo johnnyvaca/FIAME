@@ -34,8 +34,9 @@ export default function PurchaseScreen({navigation}) {
 
   function fetchData() {
     if (token === '48TtL8VT2mSest9DBQoLse6MnEZMTU') {
+    if (token !== '48TtL8VT2mSest9DBQoLse6MnEZMTU') {
+      console.log('token', token);
       fetch(URL + '/mypurchases', {
-        method: 'GET',
         headers: {
           Accept: 'application/json',
           Authorization: 'Bearer ' + token,
@@ -44,7 +45,7 @@ export default function PurchaseScreen({navigation}) {
         .then(res => res.json())
         .then(results => {
           setData(results);
-          console.log('data', data);
+          console.log('data2', results);
           setLoading(false);
         })
         .catch(function (error) {
@@ -69,29 +70,8 @@ export default function PurchaseScreen({navigation}) {
         });
     }
   }
-
-  function fetchData2() {
-    fetch(URL + '/mypurchases', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        Authorization: 'Bearer ' + token,
-      },
-    })
-      .then(res => res.json())
-      .then(results => {
-        setData(results);
-        console.log('authentication', data);
-        setLoading(false);
-      })
-      .catch(function (error) {
-        console.log('authentication3', data);
-        Alert.alert(error); // Using this line
-      });
-  }
   useEffect(() => {
     fetchData();
-    fetchData2();
   }, [isFocused, loading]);
   const renderItem = ({item}) => {
     return <PurchaseItem product={item} navigation={navigation} />;
@@ -102,14 +82,8 @@ export default function PurchaseScreen({navigation}) {
 
   return (
     <>
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('AddProduct', []);
-          }}
-          style={styles.btnAdd}>
-          <Text style={{color: '#fff'}}>Ajouter un produit</Text>
-        </TouchableOpacity>
+      <View
+        style={styles.container}>
       </View>
       <FlatList
         data={data}

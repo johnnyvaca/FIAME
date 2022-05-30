@@ -19,6 +19,9 @@ export default function ProductScreen({navigation}) {
   const {getAllProducts} = useFetchProducts();
   const isFocused = useIsFocused();
   const [token, setToken] = useState(true);
+  AsyncStorage.getItem('key').then(res => {
+    setToken(res);
+  });
 
   function fetchData() {
     fetch(URL + '/products', {
@@ -46,15 +49,17 @@ export default function ProductScreen({navigation}) {
 
   return (
     <>
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('AddProduct', []);
-          }}
-          style={styles.btnAdd}>
-          <Text style={{color: '#fff'}}>Ajouter un produit</Text>
-        </TouchableOpacity>
-      </View>
+      {token === '48TtL8VT2mSest9DBQoLse6MnEZMTU' && (
+        <View style={styles.container}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('AddProduct', []);
+            }}
+            style={styles.btnAdd}>
+            <Text style={{color: '#fff'}}>Ajouter un produit</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
