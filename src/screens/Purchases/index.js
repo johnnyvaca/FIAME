@@ -79,8 +79,8 @@ export default function PurchaseScreen({navigation}) {
   };
 
   useEffect(() => {
-    fetchData()
-    fetchData2()
+    fetchData();
+    fetchData2();
   }, [isFocused, loading]);
   const renderItem = ({item}) => {
     return <PurchaseItem product={item} navigation={navigation} />;
