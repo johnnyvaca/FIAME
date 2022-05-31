@@ -1,41 +1,52 @@
 import React, {useEffect} from 'react';
-import {
-  Alert,
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useState} from 'react';
-import SaleItem from './SaleItem';
-import {useFetchSales} from '../../api/UseFetchSales';
+
+import {useFetchProducts} from '../../api/UseFetchProducts';
 import {useSelector} from 'react-redux';
-import {getSalesList} from '../../redux/selectors';
+import {getProductsList} from '../../redux/selectors';
 import axios from 'axios';
 import {URL} from '../../../environment';
+import ProductItem from './ProductItem';
+import {useIsFocused} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function SalesScreen({navigation}) {
+export default function ProductOldScreen({navigation}) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(true);
-  const allSales = useSelector(getSalesList);
-  const {getAllSales} = useFetchSales();
+  const [oldData, setOldData] = useState(true);
+  const allProducts = useSelector(getProductsList);
+  const {getAllProducts} = useFetchProducts();
+  const isFocused = useIsFocused();
+  const [token, setToken] = useState(true);
 
   function fetchData() {
-    fetch(URL + '/api/products')
+    fetch(URL + '/products', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    })
       .then(res => res.json())
       .then(results => {
-        console.log(results);
         setData(results);
+        console.log(data);
+        for (let userObject of data) {
+          userObject.username;
+          console.log('orders', userObject.orders);
+        }
         setLoading(false);
       });
-    //   return axios.get(URL + '/api/products').then(reponse => reponse.data);
   }
   useEffect(() => {
+    AsyncStorage.getItem('key').then(res => {
+      setToken(res);
+    });
     fetchData();
-  }, []);
+  }, [isFocused, loading]);
   const renderItem = ({item}) => {
-    return <SaleItem sale={item} navigation={navigation} />;
+    return <ProductItem product={item} navigation={navigation} />;
   };
 
   return (

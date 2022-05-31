@@ -10,65 +10,55 @@ import {
 import NumericInput from 'react-native-numeric-input';
 import {URL} from '../../../environment';
 import {useSelector} from 'react-redux';
-import {getSelectedSale} from '../../redux/selectors';
-import {useFetchSales} from '../../api/UseFetchSales';
-import axios from 'axios';
-import {selectedSale} from '../../redux/actions';
-import {shouldFallbackToLegacyNativeModule} from '@react-native-async-storage/async-storage/lib/typescript/shouldFallbackToLegacyNativeModule';
+import {getSelectedProduct} from '../../redux/selectors';
 
-export const DropButton = () => {
-  <Button title="hello" />;
-};
+import axios from 'axios';
+import {selectedProduct} from '../../redux/actions';
+import {shouldFallbackToLegacyNativeModule} from '@react-native-async-storage/async-storage/lib/typescript/shouldFallbackToLegacyNativeModule';
+import {useFetchProducts} from '../../api/UseFetchProducts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function DetailsScreen({navigation, route}) {
   const [quantity, setQuantity] = useState(route.params.quantity);
   const [order, setOrder] = useState();
   const {id} = route.params;
-    function test3() {
-        navigation.navigate('UpdateProduct',{id:id});
-    }
-  const deleteSale = async id2 => {
+
+  const [token, setToken] = useState(true);
+  AsyncStorage.getItem('key').then(res => {
+    setToken(res);
+  });
+  console.log('id', id);
+
+  function updateScreen() {
+    navigation.navigate('UpdateProduct', {id: id});
+  }
+
+  const deleteProduct = async idDelete => {
     try {
-      const response = await axios.delete(URL + '/api/products/' + id2);
-    } catch (e) {
-      console.error('Error', e);
-    }
-  };
-  const putSale = async id => {
-    try {
-      const response = await axios.post(URL + '/api/products/' + id, {
-        name: name,
-        img: image,
-        price: price,
-        user_id: 1,
-      });
+      const response = await axios.delete(URL + '/products/' + idDelete);
     } catch (e) {
       console.error('Error', e);
     }
   };
 
-  function test() {
-    deleteSale(id);
+  function DeleteProduct() {
+    deleteProduct(id);
     navigation.navigate('Home');
   }
 
-  const {getSaleById} = useFetchSales();
-  const sale = useSelector(getSelectedSale);
+  const {getProductById} = useFetchProducts();
+  const product = useSelector(getSelectedProduct);
 
   var array = [];
 
-  for (let prop in sale.orders) {
-    array.push(sale.orders[prop]);
+  for (let prop in product.orders) {
+    array.push(product.orders[prop]);
   }
   console.log(array.length);
-  // var myObject = sale.orders[0];
-  //  var count = Object.keys(myObject).length;
-  const [ord, setOrd] = useState(sale.orders);
-  const [taille, setTaille] = useState(0);
   useEffect(() => {
-    getSaleById(id);
+    getProductById(id);
   }, []);
-  // console.log('sale: ', sale.orders);
+  // console.log('product: ', product.orders);
 
   return (
     <View style={styles.container}>
@@ -76,7 +66,7 @@ export default function DetailsScreen({navigation, route}) {
 
       {/* eslint-disable-next-line react-native/no-inline-styles */}
       <View style={{flex: 6}}>
-        <Image source={{uri: sale.img}} style={styles.coucou} />
+        <Image source={{uri: product.image}} style={styles.image} />
       </View>
       <View
         style={{
@@ -89,10 +79,10 @@ export default function DetailsScreen({navigation, route}) {
           borderTopWidth: 3,
           borderBottomWidth: 3,
         }}>
-        <Text style={styles.textes}>{sale.name}</Text>
-        <Text style={styles.textes}>{sale.selling_date}</Text>
-        <Text style={styles.textes}>{sale.user_id}</Text>
-        <Text style={styles.textes}>{sale.price}.- CHF</Text>
+        <Text style={styles.textes}>{product.name}</Text>
+        <Text style={styles.textes}>{product.selling_date}</Text>
+        <Text style={styles.textes}>{product.user_id}</Text>
+        <Text style={styles.textes}>{product.price}.- CHF</Text>
       </View>
       <View
         style={{
@@ -135,7 +125,7 @@ export default function DetailsScreen({navigation, route}) {
           Payés
         </Text>
         <Text style={{fontWeight: 'bold', fontSize: 20, paddingRight: 50}}>
-          {sale.paid} plats
+          {product.paid} plats
         </Text>
       </View>
       <View
@@ -155,7 +145,7 @@ export default function DetailsScreen({navigation, route}) {
             fontSize: 20,
             paddingRight: 50,
           }}>
-          {(sale.quantity - sale.paid) * sale.price}.- CHF
+          {(product.quantity - product.paid) * product.price}.- CHF
         </Text>
       </View>
       <View
@@ -167,22 +157,32 @@ export default function DetailsScreen({navigation, route}) {
           justifyContent: 'space-around',
           paddingHorizontal: 70,
         }}>
-        <TouchableOpacity
-          onPress={() => {
-            test();
-          }}>
-          <Image
-            style={array.length === 0 ? {} : {width: '0%', height: '0%'}}
-            source={require('../../../assets/icons/icons8-poubelle-32.png')}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            test3();
-          }}>
-          <Image source={require('../../../assets/icons/icons8-edit-32.png')} />
-        </TouchableOpacity>
-        <Button title="Annuler" color="red" />
+        {token === '48TtL8VT2mSest9DBQoLse6MnEZMTU' && (
+          <TouchableOpacity
+            onPress={() => {
+              DeleteProduct();
+            }}>
+            <Image
+              style={array.length === 0 ? {} : {width: '0%', height: '0%'}}
+              source={require('../../../assets/icons/icons8-poubelle-32.png')}
+            />
+          </TouchableOpacity>
+        )}
+        {token === '48TtL8VT2mSest9DBQoLse6MnEZMTU' && (
+          <TouchableOpacity
+            onPress={() => {
+              updateScreen();
+            }}>
+            <Image
+              source={require('../../../assets/icons/icons8-edit-32.png')}
+            />
+          </TouchableOpacity>
+        )}
+        <Button
+          title="Annuler"
+          color="red"
+          onPress={() => navigation.navigate('Home')}
+        />
         <Button title="Confirmer" />
       </View>
     </View>
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     flex: 3,
     width: '100%',
   },
-  coucou: {
+  image: {
     flex: 1,
     width: '100%',
     resizeMode: 'contain',

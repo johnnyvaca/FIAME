@@ -1,5 +1,5 @@
 {
-  "name": "code",
+  "name": "fiame",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.16.1",
+    "@react-native-async-storage/async-storage": "^1.17.5",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/material-top-tabs": "^6.1.1",
     "@react-navigation/native": "^6.0.8",
@@ -36,15 +36,18 @@
     "react-native-screens": "^3.13.1",
     "react-native-tab-view": "^3.1.1",
     "react-native-vector-icons": "^9.1.0",
+    "react-native-version-check": "^3.4.2",
     "react-redux": "^7.2.8",
     "redux": "^4.2.0",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "secure-store": "^0.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.17.2",
     "@babel/runtime": "7.17.2",
     "@react-native-community/eslint-config": "2.0.0",
+    "@types/react": "^18.0.9",
     "babel-jest": "26.6.3",
     "eslint": "7.14.0",
     "jest": "26.6.3",

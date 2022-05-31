@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Button,
-  Dimensions,
-  FlatList,
+  Alert,
   Image,
   StyleSheet,
   Text,
@@ -12,21 +10,20 @@ import {
 } from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {URL} from '../../../environment';
-import {useSelector} from 'react-redux';
-import {postSale} from '../../redux/selectors';
-import {useFetchSales} from '../../api/UseFetchSales';
-import DateField from 'react-native-datefield';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddProductScreen({navigation}) {
   const [name, setName] = useState();
-  const [description, setDescription] = useState();
   const [image, setImage] = useState();
-  const [imageUri, setImageUri] = useState();
-  const [source, setSource] = useState();
+  const [description, setDescription] = useState();
 
   const [price, setPrice] = useState();
-  const [condition, setCondition] = useState(true);
+  const [disabled, setDisabled] = useState(true);
+  const [token, setToken] = useState(true);
+  AsyncStorage.getItem('key').then(res => {
+    setToken(res);
+  });
 
   useEffect(() => {
     if (
@@ -35,41 +32,45 @@ export default function AddProductScreen({navigation}) {
       price === undefined ||
       price === '' ||
       image === undefined ||
-      image === ''
+      image === '' ||
+      description === undefined ||
+      description === ''
     ) {
-      setCondition(true);
-      console.log('condition désactivée', condition);
-      console.log('name', name);
-      console.log('price', price);
+      setDisabled(true);
     } else {
-      setCondition(false);
-      console.log('condition', condition);
-      console.log('name', name);
-      console.log('price', price);
+      setDisabled(false);
     }
-  }, [name, price, image, condition]);
-  const postSale2 = async () => {
+  }, [name, price, image, description, disabled]);
+  const postProduct = async () => {
     try {
-      const response = await axios.post(URL + '/api/products/', {
-        name: name,
-        //      description: description,
-        img: image,
-        //quantity: quantity,
-        //    selling_date: year + '-' + month + '-' + day,
-        price: price,
-        user_id: 1,
-      });
+      const response = await axios.post(
+        URL + '/products/',
+        {
+          name: name,
+          img: image,
+          price: price,
+          description: description,
+          user_id: 1,
+        },
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        },
+      );
     } catch (e) {
       console.error('Error', e);
     }
   };
 
-  function test() {
-    postSale2();
+  function PostProduct() {
+    postProduct();
     navigation.navigate('Home');
   }
 
-  function test2() {
+  function Cancel() {
     navigation.navigate('Home');
   }
 
@@ -88,8 +89,9 @@ export default function AddProductScreen({navigation}) {
         console.log('Not permission');
       } else if (response.errorCode === 'other') {
         console.log('other error');
-      } else if (response.assets[0].fileSize > 8000000) {
+      } else if (response.assets[0].fileSize > 8192000) {
         console.log('max 8MB', response.assets[0].fileSize);
+        Alert.alert('maximum 8MB');
       } else {
         setImage(
           'data:' +
@@ -115,7 +117,8 @@ export default function AddProductScreen({navigation}) {
         console.log('Not permission');
       } else if (response.errorCode === 'other') {
         console.log('other error');
-      } else if (response.assets[0].fileSize > 8000000) {
+      } else if (response.assets[0].fileSize > 8192000) {
+        Alert.alert('maximum 8MB');
         console.log('max 8MB', response.assets[0].fileSize);
       } else {
         setImage(
@@ -134,6 +137,11 @@ export default function AddProductScreen({navigation}) {
         onChangeText={name => setName(name)}
         style={styles.inputText}
         placeholder="Choisir un nom"
+      />
+      <TextInput
+        onChangeText={description => setDescription(description)}
+        style={styles.inputText}
+        placeholder="Choisir une description"
       />
       <TextInput
         onChangeText={price => setPrice(price)}
@@ -162,7 +170,6 @@ export default function AddProductScreen({navigation}) {
         <TouchableOpacity
           onPress={() => {
             openCamera();
-            //    alert('presed');
           }}
           style={[
             styles.inputText,
@@ -173,7 +180,6 @@ export default function AddProductScreen({navigation}) {
         <TouchableOpacity
           onPress={() => {
             chooseImage();
-            //    alert('presed');
           }}
           style={[
             styles.inputText,
@@ -190,7 +196,7 @@ export default function AddProductScreen({navigation}) {
           marginLeft: 0,
         }}>
         <TouchableOpacity
-          onPress={() => test2()}
+          onPress={() => Cancel()}
           style={[
             styles.inputText,
             {backgroundColor: '#c40e0e', width: '48%'},
@@ -198,12 +204,12 @@ export default function AddProductScreen({navigation}) {
           <Text style={{color: '#fff', textAlign: 'center'}}>Annuler</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled={condition}
+          disabled={disabled}
           onPress={() => {
-            test();
+            PostProduct();
           }}
           style={
-            condition
+            disabled
               ? [styles.disabled, {backgroundColor: '#848f98', width: '48%'}]
               : [styles.inputText, {backgroundColor: '#084572', width: '48%'}]
           }>
@@ -233,10 +239,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     marginTop: 10,
-  },
-  coucou: {
-    flex: 1,
-    width: '100%',
-    resizeMode: 'contain',
   },
 });
