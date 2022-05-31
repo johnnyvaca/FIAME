@@ -31,10 +31,10 @@ export default function AddTokenInitScreen({navigation}) {
         },
       });
       setResponse(true);
-      console.log('key333', key);
+      console.log('key333', response.data);
       navigation.navigate('Home');
     } catch (e) {
-      console.log('key333', key);
+      console.log('key333', e);
       Alert.alert('mauvaise authentification');
     }
   };

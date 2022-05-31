@@ -21,6 +21,7 @@ export default function UpdateProductScreen({navigation, route}) {
   const [name, setName] = useState(product.name);
   const [image, setImage] = useState(product.image);
   const [price, setPrice] = useState(product.price);
+  const [description, setDescription] = useState(product.description);
   const [disabled, setDisabled] = useState('true');
   const {id} = route.params;
 
@@ -30,6 +31,7 @@ export default function UpdateProductScreen({navigation, route}) {
     if (
       name === product.name &&
       image === product.image &&
+      description === product.description &&
       price == product.price
     ) {
       setDisabled('true');
@@ -126,6 +128,11 @@ export default function UpdateProductScreen({navigation, route}) {
         onChangeText={name => setName(name)}
         style={styles.inputText}
         value={name}
+      />
+      <TextInput
+        onChangeText={description => setDescription(description)}
+        style={styles.inputText}
+        value={description}
       />
       <TextInput
         onChangeText={price => setPrice(price)}

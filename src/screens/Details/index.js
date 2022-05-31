@@ -16,11 +16,17 @@ import axios from 'axios';
 import {selectedProduct} from '../../redux/actions';
 import {shouldFallbackToLegacyNativeModule} from '@react-native-async-storage/async-storage/lib/typescript/shouldFallbackToLegacyNativeModule';
 import {useFetchProducts} from '../../api/UseFetchProducts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function DetailsScreen({navigation, route}) {
   const [quantity, setQuantity] = useState(route.params.quantity);
   const [order, setOrder] = useState();
   const {id} = route.params;
+
+  const [token, setToken] = useState(true);
+  AsyncStorage.getItem('key').then(res => {
+    setToken(res);
+  });
   console.log('id', id);
 
   function updateScreen() {
@@ -151,22 +157,32 @@ export default function DetailsScreen({navigation, route}) {
           justifyContent: 'space-around',
           paddingHorizontal: 70,
         }}>
-        <TouchableOpacity
-          onPress={() => {
-            DeleteProduct();
-          }}>
-          <Image
-            style={array.length === 0 ? {} : {width: '0%', height: '0%'}}
-            source={require('../../../assets/icons/icons8-poubelle-32.png')}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            updateScreen();
-          }}>
-          <Image source={require('../../../assets/icons/icons8-edit-32.png')} />
-        </TouchableOpacity>
-        <Button title="Annuler" color="red" />
+        {token === '48TtL8VT2mSest9DBQoLse6MnEZMTU' && (
+          <TouchableOpacity
+            onPress={() => {
+              DeleteProduct();
+            }}>
+            <Image
+              style={array.length === 0 ? {} : {width: '0%', height: '0%'}}
+              source={require('../../../assets/icons/icons8-poubelle-32.png')}
+            />
+          </TouchableOpacity>
+        )}
+        {token === '48TtL8VT2mSest9DBQoLse6MnEZMTU' && (
+          <TouchableOpacity
+            onPress={() => {
+              updateScreen();
+            }}>
+            <Image
+              source={require('../../../assets/icons/icons8-edit-32.png')}
+            />
+          </TouchableOpacity>
+        )}
+        <Button
+          title="Annuler"
+          color="red"
+          onPress={() => navigation.navigate('Home')}
+        />
         <Button title="Confirmer" />
       </View>
     </View>

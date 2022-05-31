@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   Image,
   StyleSheet,
   Text,
@@ -15,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function AddProductScreen({navigation}) {
   const [name, setName] = useState();
   const [image, setImage] = useState();
+  const [description, setDescription] = useState();
 
   const [price, setPrice] = useState();
   const [disabled, setDisabled] = useState(true);
@@ -30,13 +32,15 @@ export default function AddProductScreen({navigation}) {
       price === undefined ||
       price === '' ||
       image === undefined ||
-      image === ''
+      image === '' ||
+      description === undefined ||
+      description === ''
     ) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
-  }, [name, price, image, disabled]);
+  }, [name, price, image, description, disabled]);
   const postProduct = async () => {
     try {
       const response = await axios.post(
@@ -45,7 +49,7 @@ export default function AddProductScreen({navigation}) {
           name: name,
           img: image,
           price: price,
-          description: 'hello',
+          description: description,
           user_id: 1,
         },
         {
@@ -85,8 +89,9 @@ export default function AddProductScreen({navigation}) {
         console.log('Not permission');
       } else if (response.errorCode === 'other') {
         console.log('other error');
-      } else if (response.assets[0].fileSize > 8000000) {
+      } else if (response.assets[0].fileSize > 8192000) {
         console.log('max 8MB', response.assets[0].fileSize);
+        Alert.alert('maximum 8MB');
       } else {
         setImage(
           'data:' +
@@ -112,7 +117,8 @@ export default function AddProductScreen({navigation}) {
         console.log('Not permission');
       } else if (response.errorCode === 'other') {
         console.log('other error');
-      } else if (response.assets[0].fileSize > 8000000) {
+      } else if (response.assets[0].fileSize > 8192000) {
+        Alert.alert('maximum 8MB');
         console.log('max 8MB', response.assets[0].fileSize);
       } else {
         setImage(
@@ -131,6 +137,11 @@ export default function AddProductScreen({navigation}) {
         onChangeText={name => setName(name)}
         style={styles.inputText}
         placeholder="Choisir un nom"
+      />
+      <TextInput
+        onChangeText={description => setDescription(description)}
+        style={styles.inputText}
+        placeholder="Choisir une description"
       />
       <TextInput
         onChangeText={price => setPrice(price)}
@@ -159,7 +170,6 @@ export default function AddProductScreen({navigation}) {
         <TouchableOpacity
           onPress={() => {
             openCamera();
-            //    alert('presed');
           }}
           style={[
             styles.inputText,
@@ -170,7 +180,6 @@ export default function AddProductScreen({navigation}) {
         <TouchableOpacity
           onPress={() => {
             chooseImage();
-            //    alert('presed');
           }}
           style={[
             styles.inputText,

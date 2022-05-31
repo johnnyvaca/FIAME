@@ -17,6 +17,7 @@ import {URL} from '../../../environment';
 
 import {useIsFocused} from '@react-navigation/native';
 import PurchaseItem from './PurchaseItem';
+import UserItem from './UserItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PurchaseScreen({navigation}) {
@@ -32,63 +33,70 @@ export default function PurchaseScreen({navigation}) {
     setToken(res);
   });
 
-  function fetchData() {
-    if (token !== '48TtL8VT2mSest9DBQoLse6MnEZMTU') {
+  const fetchData2 = async () => {
+    try {
       console.log('token', token);
-      fetch(URL + '/mypurchases', {
+      const response = await axios.get(URL + '/mypurchases', {
+        methode: 'GET',
         headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + token,
+          accept: 'application/json',
+          authorization: 'Bearer ' + token,
         },
-      })
-        .then(res => res.json())
-        .then(results => {
-          setData(results);
-          console.log('data2', results);
-          setLoading(false);
-        })
-        .catch(function (error) {
-          Alert.alert(error); // Using this line
-        });
-    } else {
-      fetch(URL + '/users', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + token,
-        },
-      })
-        .then(res => res.json())
-        .then(results => {
-          setData(results);
-          console.log('users', data);
-          setLoading(false);
-        })
-        .catch(function (error) {
-          Alert.alert(error); // Using this line
-        });
+      });
+      setData(response.data);
+      console.log('data23333', response.data);
+      setLoading(false);
+    } catch (e) {
+      console.error('Error in getAllProducts', e);
     }
-  }
+  };
+
+  const fetchData = async () => {
+    console.log('token', token);
+    if (token === '48TtL8VT2mSest9DBQoLse6MnEZMTU') {
+      const response = await axios.get(URL + '/users', {
+        headers: {
+          methode: 'GET',
+          accept: 'application/json',
+          authorization: 'Bearer ' + token,
+        },
+      });
+      setData(response.data);
+      console.log('data3', response.data);
+      setLoading(false);
+    } else {
+      const response = await axios.get(URL + '/mypurchases', {
+        methode: 'GET',
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer ' + token,
+        },
+      });
+      setData(response.data);
+      console.log('data23', response.data);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetchData();
+    fetchData()
+    fetchData2()
   }, [isFocused, loading]);
   const renderItem = ({item}) => {
     return <PurchaseItem product={item} navigation={navigation} />;
   };
   const renderUsers = ({item}) => {
-    return <PurchaseItem product={item} navigation={navigation} />;
+    return <UserItem user={item} navigation={navigation} />;
   };
 
   return (
     <>
-      <View
-        style={styles.container}>
-      </View>
+      <View style={styles.container} />
       <FlatList
         data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={
-          token === '48TtL8VT2mSest9DBQoLse6MnEZMTU' ? renderItem : renderUsers
+          token === '48TtL8VT2mSest9DBQoLse6MnEZMTU' ? renderUsers : renderItem
         }
         onRefresh={() => fetchData()}
         refreshing={loading}

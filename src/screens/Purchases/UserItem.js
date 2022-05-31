@@ -3,17 +3,14 @@ import {Text, Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useState} from '@types/react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function PurchaseItem({product, navigation}) {
-
+export default function UserItem({user, navigation}) {
   var array = [];
 
-  for (let prop in product) {
-    array.push(product[prop]);
+  for (let prop in user) {
+    array.push(user[prop]);
   }
   //console.log('items', array);
-  function onPress() {
-    navigation.navigate('Details', {id: product.id});
-  }
+  function onPress() {}
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -29,16 +26,14 @@ export default function PurchaseItem({product, navigation}) {
           alignItems: 'center',
         }}>
         <View style={styles.viewImage}>
-          <Image source={{uri: product.img}} style={styles.image} />
+          <Image source={{uri: user.picture}} style={styles.image} />
         </View>
         <View>
-          <Text style={styles.title}>{product.product}</Text>
-          <Text style={styles.title}>{product.made_by}</Text>
-          <Text style={styles.title}>{product.quantity}</Text>
+          <Text style={styles.title}>
+            {user.firstname} {user.lastname}
+          </Text>
+          <Text style={styles.title}>{user.name}</Text>
         </View>
-        <Text style={{fontSize: 30, position: 'absolute', right: 10}}>
-          {product.price}.-
-        </Text>
       </TouchableOpacity>
     </View>
   );
