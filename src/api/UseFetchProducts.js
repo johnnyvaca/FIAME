@@ -3,22 +3,15 @@ import axios from 'axios';
 import {useDispatch} from 'react-redux';
 import {addProducts, selectedProduct} from '../redux/actions';
 import {URL} from '../../environment';
-import {useState} from '.';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useFetchProducts = () => {
-  const [token, setToken] = useState();
-
-  AsyncStorage.getItem('key').then(res => {
-    setToken(res);
-  });
   const dispatch = useDispatch();
   const getAllProducts = async () => {
     try {
       const response = await axios.get(URL + '/products', {
         headers: {
           Accept: 'application/json',
-          Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + 'OIcO1HoDgp0fQz2EFMxXMuCCNtVHDr',
         },
       });
       dispatch(addProducts(response.data));
@@ -28,12 +21,7 @@ export const useFetchProducts = () => {
   };
   const getProductById = async id => {
     try {
-      const response = await axios.get(URL + '/products/' + id, {
-        headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + token,
-        },
-      });
+      const response = await axios.get(URL + '/products/' + id);
       dispatch(selectedProduct(response.data));
     } catch (e) {
       console.error('Error', e);
